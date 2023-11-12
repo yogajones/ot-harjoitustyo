@@ -1,9 +1,12 @@
-# FIN: Ohjelmistotekniikka -  harjoitustyö
+This is an intermediate studies project for the Software Development Methods (5 ECTS) course in the Department of Computer Science in University of Helsinki.
 
-Tästä pääset [laskareihin](https://github.com/yogajones/ot-harjoitustyo/tree/main/laskarit).
+# Personal Learning Objective Manager
 
-# ENG: Software Development Methods - intermediate studies project
+The purpose of this offline desktop app is to help lifelong learners manage their learning objectives.
 
-**The purpose of this offline desktop app is to support students of the University of Helsinki in their employment.**
+## Software Documentation:
+- [Software Requirements Specification (SRS)](https://github.com/yogajones/ot-harjoitustyo/blob/main/docs/software_requirements_specification.md)
 
-This is done by providing a tool that helps users translate formal *learning objectives into work-life relevant strengths*.
+## Other Documents
+- [Time log](https://github.com/yogajones/ot-harjoitustyo/blob/main/docs/time_log.md)
+- [Course exercises (laskarit)](https://github.com/yogajones/ot-harjoitustyo/tree/main/laskarit)
