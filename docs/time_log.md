@@ -1,6 +1,6 @@
 # Time Log
 
-Work hours are to the nearest half hour, rounding upwards. 
+Work hours are recorded to the nearest half hour, rounding upwards. 
 
 | date       | hours used | task worked on |
 | :--------: | :--------- | :------------- |
