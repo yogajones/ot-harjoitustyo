@@ -1,3 +1,4 @@
+```mermaid
 classDiagram
     class Monopolipeli {
         aloitusruudun_sijainti
@@ -52,3 +53,4 @@ classDiagram
     Pelinappula "1" -- "1" Pelaaja
     Pelaaja "2..8" -- "1" Monopolipeli
     Pelaaja "1" -- "0..22" Katu
+```
