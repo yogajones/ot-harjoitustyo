@@ -2,6 +2,7 @@ from entities.learningjourney import LearningJourney
 from repositories.learning_journey_repository import (
     LearningJourneyRepository as default_learning_journey_repository)
 
+
 class LearningJourneyService:
     """Class in charge of business logic."""
 
@@ -12,6 +13,11 @@ class LearningJourneyService:
 
     def create_learning_journey(self, name: str, active: int):
         """Calls the repository to create a Learning Journey object and returns it."""
+        if type(name) != str or type(active) != int:
+            return TypeError()
+        if len(name) == 0 or active < 0 or active > 1:
+            return ValueError()
+        
         learning_journey = LearningJourney(name=name, active=active)
         return self._learning_journey_repository.create(learning_journey=learning_journey)
     
