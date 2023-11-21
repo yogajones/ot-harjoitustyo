@@ -11,26 +11,26 @@ Personal Learning Objective Manager is an offline desktop application intended f
 ## Key Features
 
 ### **Embarking on a Learning Journey:**
-- Start a Learning Journey
-- Add Objectives to a Learning Journey
+- [x] Start a Learning Journey
+- [ ] Add Objectives to a Learning Journey
 
 ### **Reflecting during a Learning Journey:**
-- View Objectives
-- Modify Objectives
-- Delete Objectives
-- Evaluate Objectives
-    - how well is the objective met currently
-    - how challenging is the objective
+- [ ] View Objectives
+- [ ] Modify Objectives
+- [ ] Delete Objectives
+- [ ] Evaluate Objectives
+    - [ ] how well is the objective met currently
+    - [ ] how challenging is the objective
 
 ### **Closing a Learning Journey:**
-- Evaluate Objectives
-    - how well was the objective met throughout
-    - how challenging did it turn out to be
-- Finish a Learning Journey
-    - marks the journey as 'passive'
+- [ ] Evaluate Objectives
+    - [ ] how well was the objective met throughout
+    - [ ] how challenging did it turn out to be
+- [ ] Finish a Learning Journey
+    - [ ] marks the journey as 'passive'
 
 ### **Take Stock on learning:**
-- Order journeys by overall self-evaluation score
+- [ ] Order journeys by overall self-evaluation score
 
 ## Additional Features:
 
