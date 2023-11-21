@@ -2,6 +2,7 @@ import unittest
 from repositories.learning_journey_repository import learning_journey_repo
 from entities.learningjourney import LearningJourney
 
+
 class TestLearningJourneyRepository(unittest.TestCase):
     def setUp(self):
         """Empty the repo and create a mock Learning Journey for later use."""

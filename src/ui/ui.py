@@ -1,8 +1,10 @@
 from tkinter import ttk
 from services.learning_journey_service import learning_journey_service
 
+
 class UI:
     """User Interface class"""
+
     def __init__(self, root):
         self._root = root
 
@@ -14,7 +16,8 @@ class UI:
         # REFACTOR / TEST
         # print all journeys to test that it works
         # add better tests in Sprint 2
-        current_journeys = learning_journey_service.get_learning_journeys()[0][0]
+        current_journeys = learning_journey_service.get_learning_journeys()[
+            0][0]
         test = ttk.Label(master=self._root, text=str(current_journeys))
         test.pack()
 
@@ -26,9 +29,11 @@ class UI:
         # from within this start() function
         # also make self variables private
 
-        self.lj_name_label = ttk.Label(master=self._root, text="Learning Journey name:")
+        self.lj_name_label = ttk.Label(
+            master=self._root, text="Learning Journey name:")
         self.lj_name_entry = ttk.Entry(master=self._root)
-        self.lj_name_submit = ttk.Button(master=self._root, text="Add", command=self.add_entry_handler)
+        self.lj_name_submit = ttk.Button(
+            master=self._root, text="Add", command=self.add_entry_handler)
 
         self.lj_name_label.pack()
         self.lj_name_entry.pack()
