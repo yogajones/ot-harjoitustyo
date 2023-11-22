@@ -20,7 +20,8 @@ def create_tables(connection):
 
 
 def initialize_database():
-    """Creates tables with no data."""
+    """Creates tables with no data.
+    CAUTION: will destroy all saved data."""
     connection = get_database_connection()
 
     drop_tables(connection=connection)

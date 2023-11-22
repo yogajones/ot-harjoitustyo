@@ -17,6 +17,7 @@ class LearningJourneyRepository:
         cursor = self._connection.cursor()
         sql = "INSERT INTO LearningJourneys (name, active) VALUES (?, ?)"
         cursor.execute(sql, (learning_journey.name, learning_journey.active))
+        self._connection.commit()
 
         return learning_journey
 
@@ -26,12 +27,15 @@ class LearningJourneyRepository:
         journeys = cursor.execute(
             "SELECT name, active FROM LearningJourneys"
         ).fetchall()
+        self._connection.commit()
+        
         return journeys
 
     def delete_all(self):
         """Deletes all saved Learning Journeys."""
         cursor = self._connection.cursor()
         cursor.execute("DELETE FROM LearningJourneys;")
+        self._connection.commit()
 
 
 learning_journey_repo = LearningJourneyRepository(get_database_connection())
