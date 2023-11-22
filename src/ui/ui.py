@@ -16,7 +16,8 @@ class UI:
         # REFACTOR / TEST
         # print all journeys to test that it works
         # add better tests in Sprint 2
-        current_journeys = [j[0] for j in learning_journey_service.get_learning_journeys()]
+        current_journeys = [(j[0], j[1])
+                            for j in learning_journey_service.get_learning_journeys()]
         test = ttk.Label(master=self._root, text=str(current_journeys))
         test.pack()
 

@@ -12,6 +12,7 @@ class LearningJourneyService:
 
     def create_learning_journey(self, name: str, active: int = 1):
         """Calls the repository to create a Learning Journey object and returns it."""
+        # REFACTOR: perhaps a try-except block with a boolean return would be better here
         if not isinstance(name, str) or not isinstance(active, int):
             return TypeError()
         if len(name) == 0 or active < 0 or active > 1:

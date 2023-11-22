@@ -1,6 +1,6 @@
 import unittest
 from services.learning_journey_service import LearningJourneyService
-from repositories.learning_journey_repository import learning_journey_repo
+from repositories.learning_journey_repository import learning_journey_repo, AlreadyInUse
 from entities.learningjourney import LearningJourney
 
 
@@ -31,5 +31,9 @@ class TestLearningJourneyService(unittest.TestCase):
         """With an invalid input (wrong type), return an error."""
         self.assertIsInstance(
             self.lj_service.create_learning_journey(True, 1), TypeError)
+
+    def test_create_lj_name_already_in_use(self):
+        """Using an already existing name, return an error."""
+        self.lj_service.create_learning_journey("Wheel in the Sky", 1)
         self.assertIsInstance(self.lj_service.create_learning_journey(
-            "Any Way You Want It", True), TypeError)
+            "Wheel in the Sky", 1), AlreadyInUse)
