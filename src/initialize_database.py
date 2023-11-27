@@ -5,6 +5,7 @@ def drop_tables(connection):
     cursor = connection.cursor()
 
     cursor.execute('''DROP TABLE IF EXISTS LearningJourneys;''')
+    cursor.execute('''DROP TABLE IF EXISTS Objectives;''')
     connection.commit()
 
 
@@ -13,8 +14,13 @@ def create_tables(connection):
 
     cursor.execute('''CREATE TABLE LearningJourneys (
                    id INTEGER PRIMARY KEY,
-                   name TEXT NOT NULL,
+                   name TEXT NOT NULL UNIQUE,
                    active INTEGER);''')
+    cursor.execute('''CREATE TABLE Objectives (
+                   id INTEGER PRIMARY KEY,
+                   name TEXT NOT NULL,
+                   lj_id INTEGER,
+                   FOREIGN KEY (lj_id) REFERENCES LearningJourneys(id));''')
 
     connection.commit()
 
