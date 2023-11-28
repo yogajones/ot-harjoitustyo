@@ -25,7 +25,13 @@ git clone git@github.com:yogajones/ot-harjoitustyo.git
 ```bash
 poetry install
 ```
-3. Start the application:
+
+3. Initialize the database:
+```bash
+poetry run invoke build
+```
+
+4. Start the application:
 
 ```bash
 poetry run invoke start
