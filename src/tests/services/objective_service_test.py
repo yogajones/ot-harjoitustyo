@@ -44,7 +44,7 @@ class TestObjectiveService(unittest.TestCase):
         self.assertIsInstance(
             self.objective_service.create_objective(
                 Objective("Valid"), "Not valid"), TypeError)
-        
+
     def test_get_objectives_returns_them(self):
         """When an Objective is known to be added, make sure it is returned."""
         self.objective_service.create_objective(

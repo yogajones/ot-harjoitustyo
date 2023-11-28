@@ -13,7 +13,7 @@ class TestObjectiveRepository(unittest.TestCase):
         self.learning_journey_repo = learning_journey_repo
         self.objective_repo.delete_all()
         self.learning_journey_repo.delete_all()
-        
+
         self.test_journey = LearningJourney("Don't stop believin'", 1)
         self.learning_journey_repo.create(self.test_journey)
         self.test_objective = Objective("Be able to explain how CDs work")
@@ -32,4 +32,5 @@ class TestObjectiveRepository(unittest.TestCase):
     def test_create_type_conflict(self):
         """Add an object that is not a Objective to the empty repo
         and make sure an error arises."""
-        self.assertRaises(TypeError, self.objective_repo.create("I'm just a string", self.test_journey))
+        self.assertRaises(TypeError, self.objective_repo.create(
+            "I'm just a string", self.test_journey))

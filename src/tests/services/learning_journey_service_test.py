@@ -38,7 +38,7 @@ class TestLearningJourneyService(unittest.TestCase):
         self.lj_service.create_learning_journey("Wheel in the Sky", 1)
         self.assertIsInstance(self.lj_service.create_learning_journey(
             "Wheel in the Sky", 1), AlreadyInUse)
-        
+
     def test_get_ljs_returns_them(self):
         """When a Learning Journey is known to be added,
         make sure it is returned."""

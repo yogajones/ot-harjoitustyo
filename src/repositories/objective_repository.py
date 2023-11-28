@@ -36,7 +36,7 @@ class ObjectiveRepository:
         self._connection.commit()
 
         return objectives
-    
+
     def delete_all(self):
         """Deletes all saved Objectives."""
         cursor = self._connection.cursor()
