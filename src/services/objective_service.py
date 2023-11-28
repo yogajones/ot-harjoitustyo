@@ -1,5 +1,5 @@
 from entities.learningjourney import LearningJourney
-from entities.objetive import Objective
+from entities.objective import Objective
 from repositories.objective_repository import objective_repo
 
 
@@ -12,7 +12,7 @@ class ObjectiveService:
         self._objective_repository = objective_repository
 
     def create_objective(self, name: str, lj: LearningJourney):
-        """Calls the repository to create a Learning Journey object and returns it."""
+        """Calls the repository to create an Objective object and returns it."""
         # REFACTOR: perhaps a try-except block with a boolean return would be better here
 
         if not isinstance(name, str) or not isinstance(lj, LearningJourney):

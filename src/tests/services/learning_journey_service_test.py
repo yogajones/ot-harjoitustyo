@@ -8,8 +8,9 @@ class TestLearningJourneyService(unittest.TestCase):
     def setUp(self):
         """Create a Learning Journey Service instance
         that uses an emptied mock repository."""
-        learning_journey_repo.delete_all()
-        self.lj_service = LearningJourneyService(learning_journey_repo)
+        self.learning_journey_repo = learning_journey_repo
+        self.learning_journey_repo.delete_all()
+        self.lj_service = LearningJourneyService(self.learning_journey_repo)
 
     def test_create_lj_valid_input(self):
         """With valid input, succesfully create and return a Learning Journey.
@@ -37,3 +38,9 @@ class TestLearningJourneyService(unittest.TestCase):
         self.lj_service.create_learning_journey("Wheel in the Sky", 1)
         self.assertIsInstance(self.lj_service.create_learning_journey(
             "Wheel in the Sky", 1), AlreadyInUse)
+        
+    def test_get_ljs_returns_them(self):
+        """When a Learning Journey is known to be added,
+        make sure it is returned."""
+        self.lj_service.create_learning_journey("Unit testing 101")
+        self.assertIsNotNone(self.lj_service.get_learning_journeys())
