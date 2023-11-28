@@ -21,7 +21,7 @@ class ObjectiveRepository:
 
         cursor = self._connection.cursor()
         sql = "INSERT INTO Objectives (name, lj_id) VALUES (?, ?)"
-        lj_id = learning_journey_repo.get_one(lj)['id']
+        lj_id = learning_journey_repo.get_one(lj)['id'] # REFACTOR: just use lj.id to make more lean
         cursor.execute(sql, (objective.name, lj_id))
         self._connection.commit()
 

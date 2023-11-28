@@ -20,7 +20,7 @@ class ObjectiveService:
         if len(name) == 0 or len(name) > 50:
             return ValueError()
 
-        objective = Objective(name)
+        objective = Objective(name) # REFACTOR: this should be done in obj_repo class
         return self._objective_repository.create(objective, lj)
 
     def get_objectives(self):

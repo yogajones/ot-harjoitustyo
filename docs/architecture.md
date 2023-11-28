@@ -1,0 +1,1 @@
+![Software architecture](./pictures/architecture_package_diagram.png)

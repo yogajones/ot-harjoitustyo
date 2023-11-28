@@ -6,6 +6,7 @@ The purpose of this offline desktop app is to help lifelong learners manage thei
 
 ## Documentation:
 - [Software Requirements Specification (SRS)](https://github.com/yogajones/ot-harjoitustyo/blob/main/docs/software_requirements_specification.md)
+- [Architecture description](https://github.com/yogajones/ot-harjoitustyo/blob/main/docs/architecture.md)
 - [Changelog](https://github.com/yogajones/ot-harjoitustyo/blob/main/docs/changelog.md)
 - [Time log](https://github.com/yogajones/ot-harjoitustyo/blob/main/docs/time_log.md)
 
