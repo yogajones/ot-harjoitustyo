@@ -18,7 +18,7 @@ class LearningJourneyRepository:
         """Returns a database row from LearningJourneys table
         if a reference is found."""
         cursor = self._connection.cursor()
-        sql = "SELECT 1 FROM LearningJourneys WHERE name = ?"
+        sql = "SELECT id, name, active FROM LearningJourneys WHERE name = ?"
         result = cursor.execute(sql, (learning_journey.name,)).fetchone()
         self._connection.commit()
 

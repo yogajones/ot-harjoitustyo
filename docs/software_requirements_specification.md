@@ -12,7 +12,7 @@ Personal Learning Objective Manager is an offline desktop application intended f
 
 ### **Embarking on a Learning Journey:**
 - [x] Start a Learning Journey
-- [ ] Add Objectives to a Learning Journey
+- [x] Add Objectives to a Learning Journey
 
 ### **Reflecting during a Learning Journey:**
 - [ ] View Objectives

@@ -16,7 +16,7 @@ class ObjectiveRepository:
         """Appends an Objective to the database and returns it."""
 
         if not isinstance(lj, LearningJourney) or \
-            not isinstance(objective, Objective):
+                not isinstance(objective, Objective):
             return TypeError()
 
         cursor = self._connection.cursor()
@@ -26,7 +26,7 @@ class ObjectiveRepository:
         self._connection.commit()
 
         return objective
-    
+
     def get_all(self):
         """Returns all saved Objectives."""
         cursor = self._connection.cursor()
