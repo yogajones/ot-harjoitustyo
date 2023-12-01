@@ -4,6 +4,8 @@ This is an intermediate studies project for the Software Development Methods (5 
 
 The purpose of this offline desktop app is to help lifelong learners manage their learning objectives. Take a look at the [Software Requirements Specification](https://github.com/yogajones/ot-harjoitustyo/blob/main/docs/software_requirements_specification.md) for a detailed description of features.
 
+Latest release: [v0.1.0](https://github.com/yogajones/ot-harjoitustyo/releases/tag/viikko5)
+
 ## Documentation:
 - [Software Requirements Specification (SRS)](https://github.com/yogajones/ot-harjoitustyo/blob/main/docs/software_requirements_specification.md)
 - [Architecture description](https://github.com/yogajones/ot-harjoitustyo/blob/main/docs/architecture.md)
