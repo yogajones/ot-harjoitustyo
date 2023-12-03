@@ -1,4 +1,4 @@
-from tkinter import ttk, END
+from tkinter import ttk, END, Listbox
 from services.learning_journey_service import learning_journey_service
 from services.objective_service import objective_service
 import traceback
@@ -13,7 +13,7 @@ class UI:
         -> Create first Learning Journey
         -> Select that LJ to manage
         -> Go to management view
-        -> Add Learning Objectives
+            -> Add a Learning Objective and return to management view
     """
 
     def __init__(self, root):
@@ -26,6 +26,9 @@ class UI:
 
     def _display_manage_journey(self):
         """Directs the user to add Objectives to the selected Learning Journey."""
+        if self._manage_journey_frame:
+            self._manage_journey_frame.destroy()
+
         self._manage_journey_frame = ttk.Frame(master=self._root, padding=40)
         ttk.Label(master=self._manage_journey_frame,
                   text=f"Manage Learning Journey: {self._selected_journey.name}.",
@@ -42,6 +45,20 @@ class UI:
                    text="Evaluate",
                    command=self._evaluate_objective).pack()
 
+        # Display objectives
+        self._objectives_frame = ttk.Frame(master=self._manage_journey_frame)
+        ttk.Label(self._objectives_frame, text="Objectives:").pack()
+
+        objectives = objective_service.get_objectives(
+            self._selected_journey.id)
+
+        objectives_listbox = Listbox(self._objectives_frame, height=5)
+        for objective in objectives:
+            objectives_listbox.insert(END, objective.name)
+        objectives_listbox.pack(fill='both', expand=True)
+        self._objectives_frame.pack()
+
+        # Pack frame
         self._manage_journey_frame.pack()
 
     def _handle_add_objective(self):
@@ -57,6 +74,9 @@ class UI:
             success_message.pack()
             self._objective_entry.delete(0, END)
             self._add_objective_frame.after(10000, success_message.pack_forget)
+
+            # redirect to management view
+            self._display_manage_journey()
 
         except Exception as e:
             ttk.Label(master=self._root,

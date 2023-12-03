@@ -27,13 +27,22 @@ class ObjectiveRepository:
 
         return objective
 
-    def get_all(self):
-        """Returns all saved Objectives."""
+    def get_all(self, lj_id):
+        """Returns all saved Objectives. Optional filter by Learning Journey."""
         cursor = self._connection.cursor()
-        objectives = cursor.execute(
-            "SELECT name, lj_id FROM Objectives"
-        ).fetchall()
+        if lj_id:
+            objectives_data = cursor.execute(
+                "SELECT name, lj_id FROM Objectives WHERE lj_id = ?", (lj_id,)).fetchall()
+        else:
+            objectives_data = cursor.execute(
+                "SELECT name, lj_id FROM Objectives").fetchall()
         self._connection.commit()
+
+        # Convert database records to Objectives
+        objectives = [
+            Objective(name=objective_data['name'],
+                      lj_id=objective_data['lj_id'])
+            for objective_data in objectives_data]
 
         return objectives
 
