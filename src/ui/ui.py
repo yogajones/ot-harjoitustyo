@@ -1,4 +1,4 @@
-from tkinter import ttk
+from tkinter import ttk, END
 from services.learning_journey_service import learning_journey_service
 from services.objective_service import objective_service
 import traceback
@@ -26,15 +26,23 @@ class UI:
 
     def _display_manage_journey(self):
         """Directs the user to add Objectives to the selected Learning Journey."""
-        self._manage_journey_frame = ttk.Frame(master=self._root)
+        self._manage_journey_frame = ttk.Frame(master=self._root, padding=40)
         ttk.Label(master=self._manage_journey_frame,
-                  text=f"Let's add some Learning Objectives for {self._selected_journey.name}.").pack()
-        # FEATURE: add an options menu here: add objectives, delete, evaluate etc.
-        self._manage_journey_frame.pack()
+                  text=f"Manage Learning Journey: {self._selected_journey.name}.",
+                  font=("Arial", 16)).pack()
 
-        self._add_objective_frame = ttk.Frame(
-            master=self._manage_journey_frame)
-        self._add_objective()
+        # Learning Journey Management Options Menu
+        ttk.Button(master=self._manage_journey_frame,
+                   text="Add Objectives",
+                   command=self._add_objective).pack()
+        ttk.Button(master=self._manage_journey_frame,
+                   text="Delete",
+                   command=self._delete_objective).pack()
+        ttk.Button(master=self._manage_journey_frame,
+                   text="Evaluate",
+                   command=self._evaluate_objective).pack()
+
+        self._manage_journey_frame.pack()
 
     def _handle_add_objective(self):
         """Using ObjectiveService class, add an Objective."""
@@ -43,9 +51,12 @@ class UI:
                 self._objective_entry.get(), self._selected_journey)
 
             # display success message
-            ttk.Label(master=self._add_objective_frame,
-                      text=f"Awesome! You have succesfully added the Learning Objective: {new_objective.name}."
-                      ).pack()
+            success_message = ttk.Label(master=self._add_objective_frame,
+                                        text=f"Awesome! You have succesfully added the Learning Objective: {new_objective.name}."
+                                        )
+            success_message.pack()
+            self._objective_entry.delete(0, END)
+            self._add_objective_frame.after(10000, success_message.pack_forget)
 
         except Exception as e:
             ttk.Label(master=self._root,
@@ -54,13 +65,28 @@ class UI:
 
     def _add_objective(self):
         """Input form for adding a new Objective."""
+        if self._add_objective_frame is not None:
+            self._add_objective_frame.pack_forget()
+
+        self._add_objective_frame = ttk.Frame(master=self._manage_journey_frame,
+                                              padding=40)
+
         ttk.Label(master=self._add_objective_frame,
                   text="Objective:").pack()
         self._objective_entry = ttk.Entry(master=self._add_objective_frame)
         self._objective_entry.pack()
-        ttk.Button(master=self._add_objective_frame, text="Add",
+        ttk.Button(master=self._add_objective_frame,
+                   text="Add",
                    command=self._handle_add_objective).pack()
         self._add_objective_frame.pack()
+
+    def _delete_objective(self):
+        """TODO"""
+        self._add_objective()
+
+    def _evaluate_objective(self):
+        """TODO"""
+        self._add_objective()
 
     def _handle_add_journey(self):
         """Using LearningJourneyService class, add a journey."""
@@ -71,8 +97,7 @@ class UI:
             # clear the view and display success message
             self._add_journey_frame.pack_forget()
             ttk.Label(master=self._root,
-                      text=f"Great! You have now begun a new Learning Journey: {new_journey.name}."
-                      ).pack()
+                      text=f"Great! You have now begun a new Learning Journey: {new_journey.name}.", padding=20, font=("Arial", 16)).pack()
 
             self._selected_journey = new_journey
 
