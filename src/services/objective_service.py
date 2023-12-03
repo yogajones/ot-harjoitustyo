@@ -23,9 +23,9 @@ class ObjectiveService:
         objective = Objective(name)
         return self._objective_repository.create(objective, lj)
 
-    def get_objectives(self):
-        """Calls the repository to query and return all saved Objectives."""
-        return self._objective_repository.get_all()
+    def get_objectives(self, lj_id=None):
+        """Calls the repository to query and return all saved Objectives. Optional filter: Learning Journey."""
+        return self._objective_repository.get_all(lj_id)
 
 
 objective_service = ObjectiveService()
