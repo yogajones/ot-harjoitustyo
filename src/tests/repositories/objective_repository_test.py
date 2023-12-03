@@ -27,7 +27,7 @@ class TestObjectiveRepository(unittest.TestCase):
         that the names match."""
         self.objective_repo.create(self.test_objective, self.test_journey)
         objectives = self.objective_repo.get_all()
-        self.assertEqual("Be able to explain how CDs work", objectives[0][0])
+        self.assertEqual("Be able to explain how CDs work", objectives[0].name)
 
     def test_create_type_conflict(self):
         """Add an object that is not a Objective to the empty repo

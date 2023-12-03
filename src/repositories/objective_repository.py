@@ -21,13 +21,14 @@ class ObjectiveRepository:
 
         cursor = self._connection.cursor()
         sql = "INSERT INTO Objectives (name, lj_id) VALUES (?, ?)"
-        lj_id = learning_journey_repo.get_one(lj)['id'] # REFACTOR: just use lj.id to make more lean
+        # REFACTOR: just use lj.id to make more lean
+        lj_id = learning_journey_repo.get_one(lj)['id']
         cursor.execute(sql, (objective.name, lj_id))
         self._connection.commit()
 
         return objective
 
-    def get_all(self, lj_id):
+    def get_all(self, lj_id=None):
         """Returns all saved Objectives. Optional filter by Learning Journey."""
         cursor = self._connection.cursor()
         if lj_id:
