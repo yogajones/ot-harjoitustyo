@@ -35,6 +35,7 @@ class LearningJourneyRepository:
         cursor = self._connection.cursor()
         sql = "INSERT INTO LearningJourneys (name, active) VALUES (?, ?)"
         cursor.execute(sql, (learning_journey.name, learning_journey.active))
+        learning_journey.id = cursor.lastrowid
         self._connection.commit()
 
         return learning_journey
