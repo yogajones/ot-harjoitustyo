@@ -36,7 +36,7 @@ class UI:
             master=self._manage_journey_frame)
         self._add_objective()
 
-    def _add_objective_handler(self):
+    def _handle_add_objective(self):
         """Using ObjectiveService class, add an Objective."""
         try:
             new_objective = objective_service.create_objective(
@@ -59,10 +59,10 @@ class UI:
         self._objective_entry = ttk.Entry(master=self._add_objective_frame)
         self._objective_entry.pack()
         ttk.Button(master=self._add_objective_frame, text="Add",
-                   command=self._add_objective_handler).pack()
+                   command=self._handle_add_objective).pack()
         self._add_objective_frame.pack()
 
-    def _add_journey_handler(self):
+    def _handle_add_journey(self):
         """Using LearningJourneyService class, add a journey."""
         try:
             new_journey = learning_journey_service.create_learning_journey(
@@ -91,7 +91,7 @@ class UI:
         self._lj_name_entry = ttk.Entry(master=self._add_journey_frame)
         self._lj_name_entry.pack()
         ttk.Button(master=self._add_journey_frame, text="Add",
-                   command=self._add_journey_handler).pack()
+                   command=self._handle_add_journey).pack()
         self._add_journey_frame.pack()
 
     def _display_first_journey_prompt(self):
