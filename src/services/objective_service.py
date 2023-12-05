@@ -1,5 +1,3 @@
-from entities.learningjourney import LearningJourney
-from entities.objective import Objective
 from repositories.objective_repository import objective_repo
 
 
@@ -12,7 +10,7 @@ class ObjectiveService:
         self._objective_repository = objective_repository
 
     def create_objective(self, name: str, lj_id):
-        """Calls the repository to create an Objective object and returns it."""
+        """Calls the repository to create an Objective object and returns it as a dictionary."""
         # REFACTOR: perhaps a try-except block with a boolean return would be better here
 
         if not isinstance(name, str):
@@ -23,7 +21,8 @@ class ObjectiveService:
         return self._objective_repository.create(name, lj_id)
 
     def get_objectives(self, lj_id=None):
-        """Calls the repository to query and return all saved Objectives. Optional filter: Learning Journey."""
+        """Calls the repository to query and return all saved Objectives.
+        Optional filter: Learning Journey."""
         return self._objective_repository.get_all(lj_id)
 
 
