@@ -34,3 +34,23 @@ class TestObjectiveRepository(unittest.TestCase):
         """Add a non-string as objective name to the empty repo and make sure an error arises."""
         self.assertRaises(TypeError, self.objective_repo.create(
             True, self.test_journey.id))
+
+    def test_returns_all_objectives(self):
+        """Expect a list of all objectives regardless of their lj_id."""
+        self.objective_repo.create("Ob 1.1", 1)
+        self.objective_repo.create("Ob 1.2", 1)
+        self.objective_repo.create("Ob 3.1", 3)
+        self.objective_repo.create("Ob 4.1", 4)
+
+        objectives = self.objective_repo.get_all()
+        self.assertEqual(len(objectives), 4)
+
+    def test_returns_all_objectives_of_a_given_journey(self):
+        """Expect a list of only those objectives that adhere to a specific lj_id."""
+        self.objective_repo.create("Ob 1.1", 1)
+        self.objective_repo.create("Ob 1.2", 1)
+        self.objective_repo.create("Ob 3.1", 3)
+        self.objective_repo.create("Ob 4.1", 4)
+
+        objectives = self.objective_repo.get_all(4)
+        self.assertEqual(len(objectives), 1)
