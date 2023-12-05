@@ -12,38 +12,35 @@ class ObjectiveRepository:
         to be used in database operations."""
         self._connection = connection
 
-    def create(self, objective: Objective, lj: LearningJourney):
-        """Appends an Objective to the database and returns it."""
-
-        if not isinstance(lj, LearningJourney) or \
-                not isinstance(objective, Objective):
-            return TypeError()
+    def create(self, name: str, lj_id):
+        """Appends an objective to the database and returns it as a dictionary."""
 
         cursor = self._connection.cursor()
         sql = "INSERT INTO Objectives (name, lj_id) VALUES (?, ?)"
-        # REFACTOR: just use lj.id to make more lean
-        lj_id = learning_journey_repo.get_one(lj)['id']
-        cursor.execute(sql, (objective.name, lj_id))
+        cursor.execute(sql, (name, lj_id))
         self._connection.commit()
 
-        return objective
+        return {"name": name, "lj_id": lj_id}
 
     def get_all(self, lj_id=None):
-        """Returns all saved Objectives. Optional filter by Learning Journey."""
+        """Returns all saved Objectives as a list of dictionaries. Optional filter by Learning Journey."""
         cursor = self._connection.cursor()
         if lj_id:
             objectives_data = cursor.execute(
-                "SELECT name, lj_id FROM Objectives WHERE lj_id = ?", (lj_id,)).fetchall()
+                "SELECT id, name, lj_id FROM Objectives WHERE lj_id = ?", (lj_id,)).fetchall()
         else:
             objectives_data = cursor.execute(
-                "SELECT name, lj_id FROM Objectives").fetchall()
+                "SELECT id, name, lj_id FROM Objectives").fetchall()
         self._connection.commit()
 
-        # Convert database records to Objectives
-        objectives = [
-            Objective(name=objective_data['name'],
-                      lj_id=objective_data['lj_id'])
-            for objective_data in objectives_data]
+        objectives = []
+        for objective_data in objectives_data:
+            objective_dict = {
+                'id': objective_data[0],
+                'name': objective_data[1],
+                'lj_id': objective_data[2]
+            }
+            objectives.append(objective_dict)
 
         return objectives
 

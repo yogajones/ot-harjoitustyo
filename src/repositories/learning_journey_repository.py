@@ -41,12 +41,20 @@ class LearningJourneyRepository:
         return learning_journey
 
     def get_all(self):
-        """Returns all saved Learning Journeys."""
+        """Returns all saved Learning Journeys, parsed to a list of dictionaries."""
         cursor = self._connection.cursor()
-        journeys = cursor.execute(
-            "SELECT name, active FROM LearningJourneys"
-        ).fetchall()
+        cursor.execute("SELECT id, name, active FROM LearningJourneys")
+        journeys_data = cursor.fetchall()
         self._connection.commit()
+
+        journeys = []
+        for journey_data in journeys_data:
+            journey_dict = {
+                'id': journey_data[0],
+                'name': journey_data[1],
+                'active': journey_data[2]
+            }
+            journeys.append(journey_dict)
 
         return journeys
 
