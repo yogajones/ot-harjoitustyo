@@ -25,12 +25,12 @@ class TestObjectiveRepository(unittest.TestCase):
     def test_create(self):
         """Add an Objective to the empty repo and check
         that the names match."""
-        self.objective_repo.create(self.test_objective, self.test_journey)
-        objectives = self.objective_repo.get_all()
-        self.assertEqual("Be able to explain how CDs work", objectives[0].name)
+        objective = self.objective_repo.create(
+            self.test_objective.name, self.test_journey.id)
+        self.assertEqual("Be able to explain how CDs work",
+                         objective["name"])
 
     def test_create_type_conflict(self):
-        """Add an object that is not a Objective to the empty repo
-        and make sure an error arises."""
+        """Add a non-string as objective name to the empty repo and make sure an error arises."""
         self.assertRaises(TypeError, self.objective_repo.create(
-            "I'm just a string", self.test_journey))
+            True, self.test_journey.id))

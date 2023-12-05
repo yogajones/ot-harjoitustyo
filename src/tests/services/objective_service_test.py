@@ -20,13 +20,13 @@ class TestObjectiveService(unittest.TestCase):
         self.objective_service = ObjectiveService(self.objective_repo)
 
     def test_create_objective_valid_input(self):
-        """With valid input, succesfully create and return an Objective.
+        """With valid input, succesfully create and return an objective dictionary.
 
         test_create in objective_repository_test.py checks that the
         objective is indeed saved to the database."""
         objective = self.objective_service.create_objective(
-            "Some stupid objective", self.test_journey)
-        self.assertIsInstance(objective, Objective)
+            "Some stupid objective", self.test_journey.id)
+        self.assertIsInstance(objective, dict)
 
     def test_create_objective_empty_name(self):
         """With an invalid input (empty name), return an error."""
@@ -48,5 +48,5 @@ class TestObjectiveService(unittest.TestCase):
     def test_get_objectives_returns_them(self):
         """When an Objective is known to be added, make sure it is returned."""
         self.objective_service.create_objective(
-            "Gain experience with Unittest", self.test_journey)
+            "Gain experience with Unittest", self.test_journey.id)
         self.assertIsNotNone(self.objective_service.get_objectives())
