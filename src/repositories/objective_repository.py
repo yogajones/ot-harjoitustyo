@@ -1,6 +1,3 @@
-from entities.objective import Objective
-from entities.learningjourney import LearningJourney
-from repositories.learning_journey_repository import learning_journey_repo
 from database_connection import get_database_connection
 
 
@@ -15,6 +12,9 @@ class ObjectiveRepository:
     def create(self, name: str, lj_id):
         """Appends an objective to the database and returns it as a dictionary."""
 
+        if not isinstance(name, str):
+            return TypeError()
+
         cursor = self._connection.cursor()
         sql = "INSERT INTO Objectives (name, lj_id) VALUES (?, ?)"
         cursor.execute(sql, (name, lj_id))
@@ -23,7 +23,8 @@ class ObjectiveRepository:
         return {"name": name, "lj_id": lj_id}
 
     def get_all(self, lj_id=None):
-        """Returns all saved Objectives as a list of dictionaries. Optional filter by Learning Journey."""
+        """Returns all saved Objectives as a list of dictionaries.
+        Optional filter by Learning Journey."""
         cursor = self._connection.cursor()
         if lj_id:
             objectives_data = cursor.execute(

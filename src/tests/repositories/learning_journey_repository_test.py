@@ -19,7 +19,7 @@ class TestLearningJourneyRepository(unittest.TestCase):
         that the names match."""
         self.learning_journey_repo.create(self.test_journey)
         learning_journeys = self.learning_journey_repo.get_all()
-        self.assertEqual("Don't stop believin'", learning_journeys[0][0])
+        self.assertEqual("Don't stop believin'", learning_journeys[0]["name"])
 
     def test_create_type_conflict(self):
         """Add an object that is not a Learning Journey to the empty repo
