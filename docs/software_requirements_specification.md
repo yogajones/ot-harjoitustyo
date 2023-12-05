@@ -15,7 +15,7 @@ Personal Learning Objective Manager is an offline desktop application intended f
 - [x] Add Objectives to a Learning Journey
 
 ### **Reflecting during a Learning Journey:**
-- [ ] View Objectives
+- [x] View Objectives
 - [ ] Modify Objectives
 - [ ] Delete Objectives
 - [ ] Evaluate Objectives
