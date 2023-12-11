@@ -6,10 +6,11 @@ from services.objective_service import objective_service
 class ManageView:
     """Allows the user to view or add Learning Objectives to the selected Learning Journey."""
 
-    def __init__(self, root, show_home_view, show_manage_view, selected_journey):
+    def __init__(self, root, show_home_view, show_manage_view, show_rename_view, selected_journey):
         self._frame = tk.Frame(root)
         self._show_home_view = show_home_view
         self._show_manage_view = show_manage_view
+        self._show_rename_view = show_rename_view
         self._selected_journey = selected_journey
 
         # REFACTOR: find a better place for these widgets
@@ -42,6 +43,16 @@ class ManageView:
                                        command=lambda obj_id=objective["id"]:
                                        self._handle_delete_objective(obj_id))
             delete_button.pack(side='right')
+
+            rename_button = ttk.Button(objective_frame, text="Rename",
+                                       command=lambda obj_id=objective["id"], name=objective["name"]:
+                                       self._show_rename_view(obj_id, name))
+            rename_button.pack(side='right')
+
+            # evaluate_button = ttk.Button(objective_frame, text="Evaluate",
+            #                             command=None)
+            # evaluate_button.pack(side='right')
+
             objective_frame.pack(fill='x')
 
     def _handle_delete_objective(self, obj_id):

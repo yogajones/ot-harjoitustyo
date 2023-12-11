@@ -1,5 +1,6 @@
 from ui.views.home_view import HomeView
 from ui.views.manage_view import ManageView
+from ui.views.rename_objective_view import RenameObjectiveView
 
 
 class UI:
@@ -17,10 +18,14 @@ class UI:
         self._update_view(HomeView(
             self._root, self._show_manage_view, self._show_home_view, self._update_selected_journey))
 
+    def _show_rename_view(self, current_id, current_name):
+        self._update_view(RenameObjectiveView(
+            self._root, self._show_manage_view, self._selected_journey, current_id, current_name))
+
     def _show_manage_view(self, journey):
         self._update_selected_journey(journey)
         self._update_view(ManageView(
-            self._root, self._show_home_view, self._show_manage_view, self._selected_journey))
+            self._root, self._show_home_view, self._show_manage_view, self._show_rename_view, self._selected_journey))
 
     def _update_view(self, new_view):
         if self._current_view:
