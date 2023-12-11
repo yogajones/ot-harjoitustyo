@@ -1,3 +1,6 @@
+#### Package Diagram describing the View-based User Interface
+![UI architecture](./pictures/UI_package_diagram.png)
+
 #### Package Diagram describing the program's architecture on a high level
 ![Software architecture](./pictures/architecture_package_diagram.png)
 
