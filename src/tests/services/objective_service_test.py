@@ -20,10 +20,7 @@ class TestObjectiveService(unittest.TestCase):
         self.objective_service = ObjectiveService(self.objective_repo)
 
     def test_create_objective_valid_input(self):
-        """With valid input, succesfully create and return an objective dictionary.
-
-        test_create in objective_repository_test.py checks that the
-        objective is indeed saved to the database."""
+        """With valid input, succesfully create and return an objective dictionary."""
         objective = self.objective_service.create_objective(
             "Some stupid objective", self.test_journey.id)
         self.assertIsInstance(objective, dict)
@@ -50,3 +47,13 @@ class TestObjectiveService(unittest.TestCase):
         self.objective_service.create_objective(
             "Gain experience with Unittest", self.test_journey.id)
         self.assertIsNotNone(self.objective_service.get_objectives())
+
+    def test_delete_objective_returns_true(self):
+        """If the method call returns True, the operation was succesful."""
+        ob1 = self.objective_service.create_objective(
+            "Ob1", self.test_journey.id)
+        self.assertTrue(self.objective_service.delete_objective(ob1["obj_id"]))
+
+    def test_delete_objective_with_invalid_id_returns_false(self):
+        """With a non-existing obj_id, the method should return False."""
+        self.assertFalse(self.objective_service.delete_objective(999))

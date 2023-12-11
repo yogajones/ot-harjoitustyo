@@ -25,5 +25,9 @@ class ObjectiveService:
         Optional filter: Learning Journey."""
         return self._objective_repository.get_all(lj_id)
 
+    def delete_objective(self, obj_id):
+        """Calls the repository to delete one Objective."""
+        return self._objective_repository.delete_one(obj_id)
+
 
 objective_service = ObjectiveService()

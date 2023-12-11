@@ -4,6 +4,8 @@ from database_connection import get_database_connection
 class ObjectiveRepository:
     "In charge of reading and writing Objectives to/from the database."
 
+    # REFACTOR: privatize methods
+
     def __init__(self, connection):
         """Establishes a repository for Objective objects
         to be used in database operations."""
@@ -20,7 +22,16 @@ class ObjectiveRepository:
         cursor.execute(sql, (name, lj_id))
         self._connection.commit()
 
-        return {"name": name, "lj_id": lj_id}
+        return {"obj_id": cursor.lastrowid, "name": name, "lj_id": lj_id}
+
+    def get_one(self, obj_id):
+        """Returns a database row from Objectives table if a reference is found."""
+        cursor = self._connection.cursor()
+        sql = "SELECT id, name, lj_id FROM Objectives WHERE id = ?"
+        result = cursor.execute(sql, (obj_id,)).fetchone()
+        self._connection.commit()
+
+        return result
 
     def get_all(self, lj_id=None):
         """Returns all saved Objectives as a list of dictionaries.
@@ -50,6 +61,15 @@ class ObjectiveRepository:
         cursor = self._connection.cursor()
         cursor.execute("DELETE FROM Objectives;")
         self._connection.commit()
+
+    def delete_one(self, obj_id):
+        """Deletes the given Objective."""
+        if self.get_one(obj_id):
+            cursor = self._connection.cursor()
+            cursor.execute("DELETE FROM Objectives where id = ?", (obj_id,))
+            self._connection.commit()
+            return True
+        return False
 
 
 objective_repo = ObjectiveRepository(get_database_connection())

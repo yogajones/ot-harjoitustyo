@@ -18,7 +18,9 @@ class LearningJourneyService:
         if len(name) == 0 or active < 0 or active > 1:
             return ValueError()
 
-        learning_journey = LearningJourney(name=name, active=active) # REFACTOR: this should be done in lj_repo class
+        # REFACTOR: this should be done in lj_repo class
+        learning_journey = LearningJourney(name=name, active=active)
+
         return self._learning_journey_repository.create(learning_journey=learning_journey)
 
     def get_learning_journeys(self):

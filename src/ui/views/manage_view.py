@@ -25,8 +25,12 @@ class ManageView:
         self._list_objectives()
 
     def _list_objectives(self):
+        # REFACTOR: this method is copy-paste with home_view, consider combining
+        # like this: common_method(get_items_from_db, *buttons)
+
         objectives = objective_service.get_objectives(
             self._selected_journey['id'])
+
         for objective in objectives:
             objective_frame = tk.Frame(self._frame)
 
@@ -34,7 +38,15 @@ class ManageView:
                 objective_frame, text=objective['name'], font=("Arial", 12))
             label.pack(side='left', padx=20, pady=10)
 
+            delete_button = ttk.Button(objective_frame, text="Delete",
+                                       command=lambda obj_id=objective["id"]:
+                                       self._handle_delete_objective(obj_id))
+            delete_button.pack(side='right')
             objective_frame.pack(fill='x')
+
+    def _handle_delete_objective(self, obj_id):
+        objective_service.delete_objective(obj_id)
+        self._refresh()
 
     def _add_new_objective_form(self):
         self._add_new_objective_label = ttk.Label(

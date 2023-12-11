@@ -54,3 +54,13 @@ class TestObjectiveRepository(unittest.TestCase):
 
         objectives = self.objective_repo.get_all(4)
         self.assertEqual(len(objectives), 1)
+
+    def test_objective_gets_deleted(self):
+        """Add two objectives to an empty repo, delete one
+        and expect only the other to remain."""
+        ob1 = self.objective_repo.create("Ob 3.1", 3)
+        ob2 = self.objective_repo.create("Ob 4.1", 4)
+        self.objective_repo.delete_one(ob1["obj_id"])
+
+        remaining_objectives = self.objective_repo.get_all()
+        self.assertEqual(len(remaining_objectives), 1)
