@@ -26,3 +26,6 @@
 - implemented a slice: "User can view a Learning Journey's objectives"
 - added a sequence diagram of adding a new objective ; this demonstrates the new UX flow
 - other changes: routine refactoring and cleaning, started releases (latest v0.2.0)
+
+**Sprint 4**: 5 Dec 2023 - 12 Dec 2023:
+- implemented a slice: "User can delete objectives"
