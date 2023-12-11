@@ -17,5 +17,11 @@ Work hours are recorded to the nearest half hour, rounding upwards.
 | 27.11.2023 | 1,5        | frontend for feature: "User can add Objectives" |
 | 28.11.2023 | 2          | frontend and unit tests for feature: "User can add Objectives" |
 | 28.11.2023 | 1          | UML package diagram |
+| 3.12.2023  | 3          | backend and frontend for feature: "User can view Objectives" |
+| 4.12.2023  | 0,5        | planned User Path |
+| 4.12.2023  | 1          | studied TKinter |
+| 4.12.2023  | 3          | UI total renovation |
+| 5.12.2023  | 3          | UI total renovation |
+| 5.12.2023  | 1          | UML sequence diagram & docs update |
 
-TOTAL HOURS: 21
+TOTAL HOURS: 32,5

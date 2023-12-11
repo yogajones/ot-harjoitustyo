@@ -17,3 +17,12 @@
 - the above slice brought some additional classes with it: Objective, ObjectiveRepository and ObjectiveService
 - added a description of the current state of architecture in the form of a package diagram
 - other changes: added pylint and autopep8 for code quality
+
+**Sprint 3**: 28 Nov 2023 - 5 Dec 2023:
+- deemed the current User Path hostile for all humans and scrapped it
+- re-invented the wheel with a view-based UI:
+    - Home View: user can manage their Learning Journeys
+    - Manage View: user can manage the selected Learning Journey
+- implemented a slice: "User can view a Learning Journey's objectives"
+- added a sequence diagram of adding a new objective ; this demonstrates the new UX flow
+- other changes: routine refactoring and cleaning, started releases (latest v0.2.0)
