@@ -29,3 +29,6 @@
 
 **Sprint 4**: 5 Dec 2023 - 12 Dec 2023:
 - implemented a slice: "User can delete objectives"
+- implemented a slice: "User can rename objectives"
+    - this introduced the Rename Objective View
+- started to notice redundancy and need for intermediate refactoring - skipping it might slow down development soon

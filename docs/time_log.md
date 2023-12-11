@@ -24,4 +24,7 @@ Work hours are recorded to the nearest half hour, rounding upwards.
 | 5.12.2023  | 3          | UI total renovation |
 | 5.12.2023  | 1          | UML sequence diagram & docs update |
 
-TOTAL HOURS: 32,5
+| 11.12.2023 | 1,5        | feature: "User can delete objectives" |
+| 11.12.2023 | 2          | feature: "User can rename objectives" |
+
+TOTAL HOURS: 36,0
