@@ -34,7 +34,6 @@ class HomeView:
         journeys = learning_journey_service.get_learning_journeys()
         for journey in journeys:
             journey_frame = tk.Frame(self._frame)
-            journey_frame.pack(fill='x')
 
             label = ttk.Label(
                 journey_frame, text=journey['name'], font=("Arial", 12))
@@ -43,6 +42,8 @@ class HomeView:
             manage_button = ttk.Button(journey_frame, text="Manage Objectives",
                                        command=lambda journey=journey: self._show_manage_view(journey))
             manage_button.pack(side='right')
+
+            journey_frame.pack(fill='x')
 
     def _handle_add_new_journey(self):
         journey_name = self._new_journey_entry.get()
