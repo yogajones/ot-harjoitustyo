@@ -29,5 +29,14 @@ class ObjectiveService:
         """Calls the repository to delete one Objective."""
         return self._objective_repository.delete_one(obj_id)
 
+    def rename_objective(self, obj_id, new_name):
+        """Calls the repository to update the name field.
+
+        Args:
+            obj_id (int): Objective's unique ID, originating from the database.
+            new_name (str): Name to update, input from user.
+        """
+        return self._objective_repository.rename(obj_id, new_name)
+
 
 objective_service = ObjectiveService()

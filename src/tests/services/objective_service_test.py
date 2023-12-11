@@ -57,3 +57,16 @@ class TestObjectiveService(unittest.TestCase):
     def test_delete_objective_with_invalid_id_returns_false(self):
         """With a non-existing obj_id, the method should return False."""
         self.assertFalse(self.objective_service.delete_objective(999))
+
+    def test_rename_objective_returns_true(self):
+        """With a valid new name, the method should return True."""
+        ob1 = self.objective_service.create_objective(
+            "Ob1", self.test_journey.id)
+        self.assertTrue(self.objective_service.rename_objective(
+            ob1["obj_id"], "New name"))
+
+    def test_rename_objective_returns_fails_with_empty_new_name(self):
+        ob1 = self.objective_service.create_objective(
+            "Ob1", self.test_journey.id)
+        self.assertFalse(self.objective_service.rename_objective(
+            ob1["obj_id"], ""))

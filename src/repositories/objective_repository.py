@@ -71,5 +71,20 @@ class ObjectiveRepository:
             return True
         return False
 
+    def rename(self, obj_id, new_name):
+        """Updates the name field of the given objective.
+
+        Args:
+            obj_id (int): Objective's unique ID, originating from the database.
+            new_name (str): Name to update, input from user.
+        """
+        if self.get_one(obj_id) and new_name:
+            cursor = self._connection.cursor()
+            cursor.execute(
+                "UPDATE Objectives SET name = ? WHERE id = ?", (new_name, obj_id))
+            self._connection.commit()
+            return True
+        return False
+
 
 objective_repo = ObjectiveRepository(get_database_connection())

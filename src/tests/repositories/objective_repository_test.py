@@ -64,3 +64,14 @@ class TestObjectiveRepository(unittest.TestCase):
 
         remaining_objectives = self.objective_repo.get_all()
         self.assertEqual(len(remaining_objectives), 1)
+
+    def test_objective_gets_renamed(self):
+        """Create an objective, rename it and verify new name."""
+        objective = self.objective_repo.create(
+            "Be able to explain how CDs work", self.test_journey.id)
+        self.objective_repo.rename(
+            objective["obj_id"], "Recall Journey's current and past members")
+        renamed_objective = self.objective_repo.get_one(objective["obj_id"])
+
+        self.assertEqual("Recall Journey's current and past members",
+                         renamed_objective["name"])
