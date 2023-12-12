@@ -26,5 +26,6 @@ Work hours are recorded to the nearest half hour, rounding upwards.
 
 | 11.12.2023 | 1,5        | feature: "User can delete objectives" |
 | 11.12.2023 | 2          | feature: "User can rename objectives" |
+| 12.12.2023 | 1,5        | docs update: architecture, user guide |
 
-TOTAL HOURS: 36,0
+TOTAL HOURS: 37,5
