@@ -33,18 +33,8 @@ class HomeView(BaseView):
 
     def _list_journeys(self):
         journeys = learning_journey_service.get_learning_journeys()
-        for journey in journeys:
-            journey_frame = tk.Frame(self._frame)
-
-            label = ttk.Label(
-                journey_frame, text=journey['name'], font=("Arial", 12))
-            label.pack(side='left', padx=20, pady=10)
-
-            manage_button = ttk.Button(journey_frame, text="Manage Objectives",
-                                       command=lambda journey=journey: self._show_manage_view(journey))
-            manage_button.pack(side='right')
-
-            journey_frame.pack(fill='x')
+        buttons = {"Manage Objectives": self._show_manage_view}
+        self.list_items(journeys, buttons)
 
     def _handle_add_new_journey(self):
         journey_name = self._new_journey_entry.get()
