@@ -7,6 +7,14 @@ class BaseView:
 
     def __init__(self, root):
         self._frame = tk.Frame(root)
+        self._title()
+        self._return_button()
+
+    def _title(self):
+        pass
+
+    def _return_button(self):
+        pass
 
     def list_items(self, items, buttons):
         for item in items:

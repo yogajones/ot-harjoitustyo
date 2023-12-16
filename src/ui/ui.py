@@ -6,6 +6,9 @@ from ui.views.rename_objective_view import RenameObjectiveView
 class UI:
     """Coordinates views and keeps track of the selected Learning Journey to manage."""
 
+    # REFACTOR: The whole UI depends on the correct rendering order,
+    # consider switching to grid-based layout.
+
     def __init__(self, root):
         self._root = root
         self._selected_journey = {}

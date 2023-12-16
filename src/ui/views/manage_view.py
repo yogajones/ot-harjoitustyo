@@ -8,21 +8,12 @@ class ManageView(BaseView):
     """Allows the user to view or add Learning Objectives to the selected Learning Journey."""
 
     def __init__(self, root, show_home_view, show_manage_view, show_rename_view, selected_journey):
-        super().__init__(root)
         self._show_home_view = show_home_view
         self._show_manage_view = show_manage_view
         self._show_rename_view = show_rename_view
         self._selected_journey = selected_journey
 
-        # REFACTOR: find a better place for these widgets
-        self._manage_label = ttk.Label(
-            self._frame, text=f"Manage {self._selected_journey['name']}", font=("Arial", 12))
-        self._manage_label.pack(pady=20)
-
-        self._return_button = ttk.Button(
-            self._frame, text="Return to Home", command=self._show_home_view)
-        self._return_button.pack(pady=10)
-
+        super().__init__(root)
         self._add_new_objective_form()
         self._list_objectives()
 
@@ -32,7 +23,7 @@ class ManageView(BaseView):
         buttons = {
             "Delete": lambda item: self._handle_delete_objective(item["id"]),
             "Rename": lambda item: self._show_rename_view(item["id"], item["name"])
-            # "Evalute": todo
+            # "Evaluate": todo
         }
         self.list_items(objectives, buttons)
 
@@ -50,6 +41,16 @@ class ManageView(BaseView):
             objective_service.create_objective(
                 objective_name, self._selected_journey['id'])
             self._refresh()
+
+    def _title(self):
+        manage_label = ttk.Label(
+            self._frame, text=f"Manage {self._selected_journey['name']}", font=("Arial", 12))
+        manage_label.pack(pady=20)
+
+    def _return_button(self):
+        return_button = ttk.Button(
+            self._frame, text="Return to Home", command=self._show_home_view)
+        return_button.pack(pady=10)
 
     def _refresh(self):
         self._show_manage_view(self._selected_journey)
