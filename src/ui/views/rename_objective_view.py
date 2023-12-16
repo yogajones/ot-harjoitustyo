@@ -1,11 +1,11 @@
-import tkinter as tk
 from tkinter import ttk
 from services.objective_service import objective_service
+from .base_view import BaseView
 
 
-class RenameObjectiveView:
+class RenameObjectiveView(BaseView):
     def __init__(self, root, show_manage_view, selected_journey, current_id, current_name):
-        self._frame = tk.Frame(root)
+        super().__init__(root)
         self._show_manage_view = show_manage_view
         self._selected_journey = selected_journey
 
@@ -36,9 +36,3 @@ class RenameObjectiveView:
             self._frame, text="Back",
             command=lambda: self._show_manage_view(self._selected_journey))
         self._return_btn.pack(pady=10)
-
-    def pack(self):
-        self._frame.pack()
-
-    def hide(self):
-        self._frame.pack_forget()

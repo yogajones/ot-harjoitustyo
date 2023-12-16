@@ -1,16 +1,17 @@
 import tkinter as tk
 from tkinter import ttk
 from services.learning_journey_service import learning_journey_service
+from .base_view import BaseView
 
 
-class HomeView:
+class HomeView(BaseView):
     """Allows the user to add a new Learning Journey and redirects them to manage existing ones."""
 
     # BUG: When the user adds a certain number of journeys, they overflow out of sight.
     #      A scrollbar or other solution is needed.
 
     def __init__(self, root, show_manage_view, show_home_view, update_selected_journey):
-        self._frame = tk.Frame(root)
+        super().__init__(root)
         self._show_manage_view = show_manage_view
         self._show_home_view = show_home_view
         self._update_selected_journey = update_selected_journey
@@ -53,9 +54,3 @@ class HomeView:
 
     def _refresh(self):
         self._show_home_view()
-
-    def pack(self):
-        self._frame.pack()
-
-    def hide(self):
-        self._frame.pack_forget()

@@ -1,13 +1,14 @@
 import tkinter as tk
 from tkinter import ttk
 from services.objective_service import objective_service
+from .base_view import BaseView
 
 
-class ManageView:
+class ManageView(BaseView):
     """Allows the user to view or add Learning Objectives to the selected Learning Journey."""
 
     def __init__(self, root, show_home_view, show_manage_view, show_rename_view, selected_journey):
-        self._frame = tk.Frame(root)
+        super().__init__(root)
         self._show_home_view = show_home_view
         self._show_manage_view = show_manage_view
         self._show_rename_view = show_rename_view
@@ -80,9 +81,3 @@ class ManageView:
 
     def _refresh(self):
         self._show_manage_view(self._selected_journey)
-
-    def pack(self):
-        self._frame.pack()
-
-    def hide(self):
-        self._frame.pack_forget()
