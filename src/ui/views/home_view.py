@@ -20,13 +20,14 @@ class HomeView(BaseView):
         self._list_journeys()
 
     def _add_new_journey_form(self):
-        self._new_journey_entry = self.form_add_new("Add new Learning Journey",
-                                                    self._handle_add_new_journey)
+        self._new_journey_entry = self._form_one_entry("Add new Learning Journey",
+                                                       "Add",
+                                                       self._handle_add_new_journey)
 
     def _list_journeys(self):
         journeys = learning_journey_service.get_learning_journeys()
         buttons = {"Manage Objectives": self._show_manage_view}
-        self.list_items(journeys, buttons)
+        self._list_items(journeys, buttons)
 
     def _handle_add_new_journey(self):
         journey_name = self._new_journey_entry.get()

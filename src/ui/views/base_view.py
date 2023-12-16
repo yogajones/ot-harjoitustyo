@@ -16,7 +16,7 @@ class BaseView:
     def _return_button(self):
         pass
 
-    def list_items(self, items, buttons):
+    def _list_items(self, items, buttons):
         for item in items:
             item_frame = tk.Frame(self._frame)
 
@@ -31,17 +31,18 @@ class BaseView:
 
             item_frame.pack(fill='x')
 
-    def form_add_new(self, label_text, add_handler):
-        add_label = ttk.Label(self._frame, text=label_text)
-        add_label.pack()
+    def _form_one_entry(self, label_text, btn_text, handler):
+        label = ttk.Label(self._frame, text=label_text)
+        label.pack()
 
-        new_entry = ttk.Entry(self._frame)
-        new_entry.pack()
+        entry = ttk.Entry(self._frame)
+        entry.pack()
 
-        add_button = ttk.Button(self._frame, text="Add", command=add_handler)
-        add_button.pack()
+        button = ttk.Button(
+            self._frame, text=btn_text, command=handler)
+        button.pack()
 
-        return new_entry
+        return entry
 
     def pack(self):
         self._frame.pack()

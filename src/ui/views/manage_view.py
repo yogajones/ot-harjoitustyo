@@ -25,15 +25,16 @@ class ManageView(BaseView):
             "Rename": lambda item: self._show_rename_view(item["id"], item["name"])
             # "Evaluate": todo
         }
-        self.list_items(objectives, buttons)
+        self._list_items(objectives, buttons)
 
     def _handle_delete_objective(self, obj_id):
         objective_service.delete_objective(obj_id)
         self._refresh()
 
     def _add_new_objective_form(self):
-        self._new_objective_entry = self.form_add_new("Add new Learning Objective",
-                                                      self._handle_add_new_objective)
+        self._new_objective_entry = self._form_one_entry("Add new Learning Objective",
+                                                         "Add",
+                                                         self._handle_add_new_objective)
 
     def _handle_add_new_objective(self):
         objective_name = self._new_objective_entry.get()
