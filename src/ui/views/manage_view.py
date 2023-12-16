@@ -41,16 +41,8 @@ class ManageView(BaseView):
         self._refresh()
 
     def _add_new_objective_form(self):
-        self._add_new_objective_label = ttk.Label(
-            self._frame, text="Add new Learning Objective")
-        self._add_new_objective_label.pack()
-
-        self._new_objective_entry = ttk.Entry(self._frame)
-        self._new_objective_entry.pack()
-
-        self._add_button = ttk.Button(
-            self._frame, text="Add", command=self._handle_add_new_objective)
-        self._add_button.pack()
+        self._new_objective_entry = self.form_add_new("Add new Learning Objective",
+                                                      self._handle_add_new_objective)
 
     def _handle_add_new_objective(self):
         objective_name = self._new_objective_entry.get()

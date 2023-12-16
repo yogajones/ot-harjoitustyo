@@ -23,6 +23,18 @@ class BaseView:
 
             item_frame.pack(fill='x')
 
+    def form_add_new(self, label_text, add_handler):
+        add_label = ttk.Label(self._frame, text=label_text)
+        add_label.pack()
+
+        new_entry = ttk.Entry(self._frame)
+        new_entry.pack()
+
+        add_button = ttk.Button(self._frame, text="Add", command=add_handler)
+        add_button.pack()
+
+        return new_entry
+
     def pack(self):
         self._frame.pack()
 

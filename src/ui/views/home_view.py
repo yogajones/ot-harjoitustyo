@@ -20,16 +20,8 @@ class HomeView(BaseView):
         self._list_journeys()
 
     def _add_new_journey_form(self):
-        self._add_new_journey_label = ttk.Label(
-            self._frame, text="Add new Learning Journey")
-        self._add_new_journey_label.pack()
-
-        self._new_journey_entry = ttk.Entry(self._frame)
-        self._new_journey_entry.pack()
-
-        self._add_button = ttk.Button(
-            self._frame, text="Add", command=self._handle_add_new_journey)
-        self._add_button.pack()
+        self._new_journey_entry = self.form_add_new("Add new Learning Journey",
+                                                    self._handle_add_new_journey)
 
     def _list_journeys(self):
         journeys = learning_journey_service.get_learning_journeys()
