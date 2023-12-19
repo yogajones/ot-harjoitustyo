@@ -4,3 +4,4 @@ __pycache__
 htmlcov
 .vscode
 data/database.sqlite
+data/test_database.sqlite

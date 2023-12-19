@@ -1,4 +1,4 @@
-from database_connection import get_database_connection
+from database_connection import get_database_connection, get_test_database_connection
 
 
 def drop_tables(connection):
@@ -26,9 +26,18 @@ def create_tables(connection):
 
 
 def initialize_database():
-    """Creates tables with no data.
-    CAUTION: will destroy all saved data."""
+    """Creates tables with no data. CAUTION: will destroy all saved data.
+    """
     connection = get_database_connection()
 
     drop_tables(connection=connection)
     create_tables(connection=connection)
+
+
+def initialize_test_database():
+    """Creates test tables with no data.
+    """
+    test_connection = get_test_database_connection()
+
+    drop_tables(connection=test_connection)
+    create_tables(connection=test_connection)

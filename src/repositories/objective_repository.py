@@ -1,4 +1,4 @@
-from database_connection import get_database_connection
+from database_connection import get_database_connection, get_test_database_connection
 
 
 class ObjectiveRepository:
@@ -88,3 +88,4 @@ class ObjectiveRepository:
 
 
 objective_repo = ObjectiveRepository(get_database_connection())
+test_objective_repo = ObjectiveRepository(get_test_database_connection())

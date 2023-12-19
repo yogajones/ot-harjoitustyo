@@ -1,5 +1,5 @@
 from entities.learningjourney import LearningJourney
-from database_connection import get_database_connection
+from database_connection import get_database_connection, get_test_database_connection
 
 
 class AlreadyInUse(Exception):
@@ -66,3 +66,5 @@ class LearningJourneyRepository:
 
 
 learning_journey_repo = LearningJourneyRepository(get_database_connection())
+test_learning_journey_repo = LearningJourneyRepository(
+    get_test_database_connection())

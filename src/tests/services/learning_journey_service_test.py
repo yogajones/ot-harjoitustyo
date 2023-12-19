@@ -1,6 +1,6 @@
 import unittest
 from services.learning_journey_service import LearningJourneyService
-from repositories.learning_journey_repository import learning_journey_repo, AlreadyInUse
+from repositories.learning_journey_repository import test_learning_journey_repo, AlreadyInUse
 from entities.learningjourney import LearningJourney
 
 
@@ -8,7 +8,7 @@ class TestLearningJourneyService(unittest.TestCase):
     def setUp(self):
         """Create a Learning Journey Service instance
         that uses an emptied mock repository."""
-        self.learning_journey_repo = learning_journey_repo
+        self.learning_journey_repo = test_learning_journey_repo
         self.learning_journey_repo.delete_all()
         self.lj_service = LearningJourneyService(self.learning_journey_repo)
 

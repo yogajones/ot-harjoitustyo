@@ -1,6 +1,6 @@
 import unittest
-from repositories.objective_repository import objective_repo
-from repositories.learning_journey_repository import learning_journey_repo
+from repositories.objective_repository import test_objective_repo
+from repositories.learning_journey_repository import test_learning_journey_repo
 from entities.objective import Objective
 from entities.learningjourney import LearningJourney
 
@@ -9,8 +9,8 @@ class TestObjectiveRepository(unittest.TestCase):
     def setUp(self):
         """Create a mock Objective Repo and Learning Journey Repo,
         a mock journey and a mock objective."""
-        self.objective_repo = objective_repo
-        self.learning_journey_repo = learning_journey_repo
+        self.objective_repo = test_objective_repo
+        self.learning_journey_repo = test_learning_journey_repo
         self.objective_repo.delete_all()
         self.learning_journey_repo.delete_all()
 

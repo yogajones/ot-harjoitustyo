@@ -1,7 +1,8 @@
 import unittest
 from services.objective_service import ObjectiveService
-from repositories.learning_journey_repository import learning_journey_repo, AlreadyInUse
-from repositories.objective_repository import objective_repo
+from repositories.learning_journey_repository import test_learning_journey_repo
+from repositories.objective_repository import test_objective_repo
+from initialize_database import initialize_test_database
 from entities.learningjourney import LearningJourney
 from entities.objective import Objective
 
@@ -10,10 +11,9 @@ class TestObjectiveService(unittest.TestCase):
     def setUp(self):
         """Create an Objective Service instance
         that uses an emptied mock repository."""
-        self.learning_journey_repo = learning_journey_repo
-        self.objective_repo = objective_repo
-        self.learning_journey_repo.delete_all()
-        self.objective_repo.delete_all()
+        initialize_test_database()
+        self.learning_journey_repo = test_learning_journey_repo
+        self.objective_repo = test_objective_repo
         self.test_journey = LearningJourney("Babbys first LJ")
         self.learning_journey_repo.create(self.test_journey)
 
