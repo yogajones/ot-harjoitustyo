@@ -21,13 +21,15 @@ def create_tables(connection):
                    id INTEGER PRIMARY KEY,
                    name TEXT NOT NULL,
                    lj_id INTEGER,
-                   FOREIGN KEY (lj_id) REFERENCES LearningJourneys(id));''')
+                   FOREIGN KEY (lj_id) REFERENCES LearningJourneys(id)
+                   ON DELETE CASCADE);''')
     cursor.execute('''CREATE TABLE Evaluations (
                    id INTEGER PRIMARY KEY,
                    obj_id INTEGER NOT NULL,
                    progress INTEGER,
                    challenge INTEGER,
-                   FOREIGN KEY (obj_id) REFERENCES Objectives(id));''')
+                   FOREIGN KEY (obj_id) REFERENCES Objectives(id)
+                   ON DELETE CASCADE);''')
 
     connection.commit()
 
