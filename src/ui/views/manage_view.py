@@ -7,10 +7,11 @@ from .base_view import BaseView
 class ManageView(BaseView):
     """Allows the user to view or add Learning Objectives to the selected Learning Journey."""
 
-    def __init__(self, root, show_home_view, show_manage_view, show_rename_view, selected_journey):
+    def __init__(self, root, show_home_view, show_manage_view, show_evaluate_view, show_rename_view, selected_journey):
         self._show_home_view = show_home_view
         self._show_manage_view = show_manage_view
         self._show_rename_view = show_rename_view
+        self._show_evaluate_view = show_evaluate_view
         self._selected_journey = selected_journey
 
         super().__init__(root)
@@ -21,9 +22,9 @@ class ManageView(BaseView):
         objectives = objective_service.get_objectives(
             self._selected_journey['id'])
         buttons = {
-            "Delete": lambda item: self._handle_delete_objective(item["id"]),
-            "Rename": lambda item: self._show_rename_view(item["id"], item["name"])
-            # "Evaluate": todo
+            "Delete": lambda objective: self._handle_delete_objective(objective["id"]),
+            "Rename": lambda objective: self._show_rename_view(objective["id"], objective["name"]),
+            "Evaluate": lambda objective: self._show_evaluate_view(objective["id"], objective["name"])
         }
         self._list_items(objectives, buttons)
 
