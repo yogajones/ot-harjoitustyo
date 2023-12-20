@@ -3,18 +3,20 @@ from repositories.objective_repository import test_objective_repo
 from repositories.learning_journey_repository import test_learning_journey_repo
 from entities.objective import Objective
 from entities.learningjourney import LearningJourney
+from initialize_database import initialize_test_database
 
 
 class TestObjectiveRepository(unittest.TestCase):
     def setUp(self):
         """Create a mock Objective Repo and Learning Journey Repo,
         a mock journey and a mock objective."""
+        initialize_test_database()
         self.objective_repo = test_objective_repo
         self.learning_journey_repo = test_learning_journey_repo
-        self.objective_repo.delete_all()
-        self.learning_journey_repo.delete_all()
 
         self.test_journey = LearningJourney("Don't stop believin'", 1)
+        self.learning_journey_repo.create(self.test_journey)
+        self.test_journey = LearningJourney("Second", 2)
         self.learning_journey_repo.create(self.test_journey)
         self.test_objective = Objective("Be able to explain how CDs work")
 
@@ -39,27 +41,25 @@ class TestObjectiveRepository(unittest.TestCase):
         """Expect a list of all objectives regardless of their lj_id."""
         self.objective_repo.create("Ob 1.1", 1)
         self.objective_repo.create("Ob 1.2", 1)
-        self.objective_repo.create("Ob 3.1", 3)
-        self.objective_repo.create("Ob 4.1", 4)
+        self.objective_repo.create("Ob 2.1", 2)
 
         objectives = self.objective_repo.get_all()
-        self.assertEqual(len(objectives), 4)
+        self.assertEqual(len(objectives), 3)
 
     def test_returns_all_objectives_of_a_given_journey(self):
         """Expect a list of only those objectives that adhere to a specific lj_id."""
         self.objective_repo.create("Ob 1.1", 1)
         self.objective_repo.create("Ob 1.2", 1)
-        self.objective_repo.create("Ob 3.1", 3)
-        self.objective_repo.create("Ob 4.1", 4)
+        self.objective_repo.create("Ob 2.1", 2)
 
-        objectives = self.objective_repo.get_all(4)
+        objectives = self.objective_repo.get_all(2)
         self.assertEqual(len(objectives), 1)
 
     def test_objective_gets_deleted(self):
         """Add two objectives to an empty repo, delete one
         and expect only the other to remain."""
-        ob1 = self.objective_repo.create("Ob 3.1", 3)
-        ob2 = self.objective_repo.create("Ob 4.1", 4)
+        ob1 = self.objective_repo.create("Ob 3.1", 1)
+        ob2 = self.objective_repo.create("Ob 4.1", 2)
         self.objective_repo.delete_one(ob1["obj_id"])
 
         remaining_objectives = self.objective_repo.get_all()

@@ -1,13 +1,14 @@
 import unittest
 from repositories.learning_journey_repository import test_learning_journey_repo
 from entities.learningjourney import LearningJourney
+from initialize_database import initialize_test_database
 
 
 class TestLearningJourneyRepository(unittest.TestCase):
     def setUp(self):
         """Empty the repo and create a mock Learning Journey for later use."""
+        initialize_test_database()
         self.learning_journey_repo = test_learning_journey_repo
-        self.learning_journey_repo.delete_all()
         self.test_journey = LearningJourney("Don't stop believin'", 1)
 
     def test_repo_is_empty_in_the_beginning(self):
