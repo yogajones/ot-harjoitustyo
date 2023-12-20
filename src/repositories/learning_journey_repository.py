@@ -58,12 +58,6 @@ class LearningJourneyRepository:
 
         return journeys
 
-    def delete_all(self):
-        """Deletes all saved Learning Journeys."""
-        cursor = self._connection.cursor()
-        cursor.execute("DELETE FROM LearningJourneys;")
-        self._connection.commit()
-
 
 learning_journey_repo = LearningJourneyRepository(get_database_connection())
 test_learning_journey_repo = LearningJourneyRepository(

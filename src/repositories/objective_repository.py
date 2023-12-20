@@ -57,12 +57,6 @@ class ObjectiveRepository:
 
         return objectives
 
-    def delete_all(self):
-        """Deletes all saved Objectives."""
-        cursor = self._connection.cursor()
-        cursor.execute("DELETE FROM Objectives;")
-        self._connection.commit()
-
     def delete_one(self, obj_id):
         """Deletes the given Objective."""
         if self.get_one(obj_id):
@@ -100,12 +94,11 @@ class ObjectiveRepository:
         """
         if self.get_one(obj_id):
             cursor = self._connection.cursor()
-            sql = "INSERT INTO Evaluations (obj_id, progress, challenge) VALUES (?, ?, ?)"
+            sql = """INSERT OR REPLACE INTO Evaluations
+                     (obj_id, progress, challenge)
+                     VALUES (?, ?, ?)"""
             cursor.execute(sql, (obj_id, progress, challenge))
             self._connection.commit()
-
-            test_print = cursor.execute("SELECT * FROM Evaluations").fetchall()
-            print(test_print)
 
             return  # objective as dict
 
