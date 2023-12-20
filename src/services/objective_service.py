@@ -38,5 +38,18 @@ class ObjectiveService:
         """
         return self._objective_repository.rename(obj_id, new_name)
 
+    def evaluate_objective(self, obj_id, progress, challenge):
+        """Calls the repository to insert evaluations. Returns objective as dict.
+
+        Args:
+            obj_id (int): Objective's unique ID, originating from the database.
+            progress (int): Degree of objective completion, input from user.
+            challenge (int): Degree of perceived challenge, input from user.
+
+        Returns:
+            dict: Updated objective as dict.
+        """
+        return self._objective_repository.evaluate(obj_id, progress, challenge)
+
 
 objective_service = ObjectiveService()

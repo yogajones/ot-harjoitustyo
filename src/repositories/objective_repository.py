@@ -2,7 +2,8 @@ from database_connection import get_database_connection, get_test_database_conne
 
 
 class ObjectiveRepository:
-    "In charge of reading and writing Objectives to/from the database."
+    """In charge of reading and writing Objectives to/from the database.
+    Deals with Objectives and Evaluations tables."""
 
     # REFACTOR: privatize methods
 
@@ -85,6 +86,28 @@ class ObjectiveRepository:
             self._connection.commit()
             return True
         return False
+
+    def evaluate(self, obj_id, progress, challenge):
+        """Updates an Objective's evaluations.
+
+        Args:
+            obj_id (int): Objective's unique ID, originating from the database.
+            progress (int): Degree of objective completion, input from user.
+            challenge (int): Degree of perceived challenge, input from user.
+
+        Returns:
+            dict: Updated objective as dict.
+        """
+        if self.get_one(obj_id):
+            cursor = self._connection.cursor()
+            sql = "INSERT INTO Evaluations (obj_id, progress, challenge) VALUES (?, ?, ?)"
+            cursor.execute(sql, (obj_id, progress, challenge))
+            self._connection.commit()
+
+            test_print = cursor.execute("SELECT * FROM Evaluations").fetchall()
+            print(test_print)
+
+            return  # objective as dict
 
 
 objective_repo = ObjectiveRepository(get_database_connection())
