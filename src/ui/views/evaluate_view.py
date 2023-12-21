@@ -1,4 +1,4 @@
-from tkinter import ttk, CENTER
+from tkinter import ttk, CENTER, StringVar
 from .base_view import BaseView
 from services.objective_service import objective_service
 
@@ -11,11 +11,10 @@ class EvaluateView(BaseView):
         self._objective_name = objective_name
         self._selected_journey = selected_journey
 
-        self._current_progress = objective_service.get_evaluations(self._objective_id)[
-            'progress']
-        self._current_challenge = objective_service.get_evaluations(self._objective_id)[
-            'challenge']
-
+        self._current_progress = StringVar(value=str(objective_service.get_evaluations(self._objective_id)[
+            'progress']))
+        self._current_challenge = StringVar(value=str(objective_service.get_evaluations(self._objective_id)[
+            'challenge']))
         super().__init__(root)
 
         self._evaluate_objective_form()
