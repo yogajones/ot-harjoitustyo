@@ -1,44 +1,38 @@
 import unittest
-from repositories.objective_repository import test_objective_repo
-from repositories.learning_journey_repository import test_learning_journey_repo
-from entities.objective import Objective
-from entities.learningjourney import LearningJourney
+from repositories.objective_repository import ObjectiveRepository
+from repositories.learning_journey_repository import LearningJourneyRepository
 from initialize_database import initialize_test_database
+from database_connection import get_test_database_connection
+
+test_objective_repo = ObjectiveRepository(get_test_database_connection())
+test_learning_journey_repo = LearningJourneyRepository(
+    get_test_database_connection())
 
 
 class TestObjectiveRepository(unittest.TestCase):
     def setUp(self):
-        """Create a mock Objective Repo and Learning Journey Repo,
-        a mock journey and a mock objective."""
         initialize_test_database()
         self.objective_repo = test_objective_repo
         self.learning_journey_repo = test_learning_journey_repo
 
-        self.test_journey = LearningJourney("Don't stop believin'", 1)
-        self.learning_journey_repo.create(self.test_journey)
-        self.test_journey = LearningJourney("Second", 2)
-        self.learning_journey_repo.create(self.test_journey)
-        self.test_objective = Objective("Be able to explain how CDs work")
+        self.test_objective_name = "OB"
+
+        self.test_lj_1 = self.learning_journey_repo.create("LJ_1", 1)
+        self.test_lj_2 = self.learning_journey_repo.create("LJ_2", 1)
 
     def test_repo_is_empty_in_the_beginning(self):
-        """Verify that the repo is indeed empty."""
         self.assertFalse(self.objective_repo.get_all())
 
-    def test_create(self):
-        """Add an Objective to the empty repo and check
-        that the names match."""
+    def test_create_valid_name_and_lj_id(self):
         objective = self.objective_repo.create(
-            self.test_objective.name, self.test_journey.id)
-        self.assertEqual("Be able to explain how CDs work",
-                         objective["name"])
+            self.test_objective_name, self.test_lj_1.id)
+        self.assertEqual("OB", objective["name"])
 
     def test_create_type_conflict(self):
-        """Add a non-string as objective name to the empty repo and make sure an error arises."""
         self.assertRaises(TypeError, self.objective_repo.create(
-            True, self.test_journey.id))
+            True, self.test_lj_1.id))
 
     def test_returns_all_objectives(self):
-        """Expect a list of all objectives regardless of their lj_id."""
         self.objective_repo.create("Ob 1.1", 1)
         self.objective_repo.create("Ob 1.2", 1)
         self.objective_repo.create("Ob 2.1", 2)
@@ -47,7 +41,6 @@ class TestObjectiveRepository(unittest.TestCase):
         self.assertEqual(len(objectives), 3)
 
     def test_returns_all_objectives_of_a_given_journey(self):
-        """Expect a list of only those objectives that adhere to a specific lj_id."""
         self.objective_repo.create("Ob 1.1", 1)
         self.objective_repo.create("Ob 1.2", 1)
         self.objective_repo.create("Ob 2.1", 2)
@@ -56,8 +49,6 @@ class TestObjectiveRepository(unittest.TestCase):
         self.assertEqual(len(objectives), 1)
 
     def test_objective_gets_deleted(self):
-        """Add two objectives to an empty repo, delete one
-        and expect only the other to remain."""
         ob1 = self.objective_repo.create("Ob 3.1", 1)
         ob2 = self.objective_repo.create("Ob 4.1", 2)
         self.objective_repo.delete_one(ob1["obj_id"])
@@ -66,12 +57,36 @@ class TestObjectiveRepository(unittest.TestCase):
         self.assertEqual(len(remaining_objectives), 1)
 
     def test_objective_gets_renamed(self):
-        """Create an objective, rename it and verify new name."""
         objective = self.objective_repo.create(
-            "Be able to explain how CDs work", self.test_journey.id)
+            "Before renaming", self.test_lj_1.id)
         self.objective_repo.rename(
-            objective["obj_id"], "Recall Journey's current and past members")
+            objective["obj_id"], "After renaming")
         renamed_objective = self.objective_repo.get_one(objective["obj_id"])
 
-        self.assertEqual("Recall Journey's current and past members",
+        self.assertEqual("After renaming",
                          renamed_objective["name"])
+
+    def test_evaluate_operation_succeeds_with_valid_input(self):
+        objective = self.objective_repo.create(
+            self.test_objective_name, self.test_lj_1.id)
+        self.assertTrue(self.objective_repo.evaluate(
+            objective["obj_id"], 5, 5))
+
+    # def test_evaluate_operation_fails_with_invalid_input(self):
+    #    objective = self.objective_repo.create(
+    #        self.test_objective_name, self.test_lj_1.id)
+    #    self.assertFalse(self.objective_repo.evaluate(
+    #        objective["obj_id"], 20, 5))
+    #    self.assertFalse(self.objective_repo.evaluate(
+    #        objective["obj_id"], 5, "string"))
+    #    self.assertFalse(self.objective_repo.evaluate(
+    #        999, 5, 5))
+
+    def evaluate(self, obj_id, progress, challenge):
+        if self.get_one(obj_id):
+            cursor = self._connection.cursor()
+            cursor.execute(sql, (obj_id, progress, challenge))
+            self._connection.commit()
+
+            return True
+        return False

@@ -1,8 +1,12 @@
 import unittest
 from services.learning_journey_service import LearningJourneyService
-from repositories.learning_journey_repository import test_learning_journey_repo, AlreadyInUse
+from repositories.learning_journey_repository import LearningJourneyRepository, AlreadyInUse
 from entities.learningjourney import LearningJourney
 from initialize_database import initialize_test_database
+from database_connection import get_test_database_connection
+
+test_learning_journey_repo = LearningJourneyRepository(
+    get_test_database_connection())
 
 
 class TestLearningJourneyService(unittest.TestCase):
@@ -14,34 +18,26 @@ class TestLearningJourneyService(unittest.TestCase):
         self.lj_service = LearningJourneyService(self.learning_journey_repo)
 
     def test_create_lj_valid_input(self):
-        """With valid input, succesfully create and return a Learning Journey.
-
-        test_create in learning_journey_repository_test.py checks that the
-        object is indeed saved to the database."""
-        lj_object = self.lj_service.create_learning_journey(
-            "Wheel in the Sky", 1)
+        lj_object = self.lj_service.create_learning_journey("LJ", 1)
         self.assertIsInstance(lj_object, LearningJourney)
 
     def test_create_lj_empty_name(self):
-        """With an invalid input (empty name), return an error."""
-        self.assertIsInstance(
-            self.lj_service.create_learning_journey("", 1), ValueError)
-        self.assertIsInstance(self.lj_service.create_learning_journey(
-            "Any Way You Want It", 2), ValueError)
+        self.assertRaises(
+            ValueError, self.lj_service.create_learning_journey, "", 1)
+
+    def test_create_lj_with_invalid_status_parameter(self):
+        self.assertRaises(
+            ValueError, self.lj_service.create_learning_journey, "LJ", 2)
 
     def test_create_lj_type_conflict(self):
-        """With an invalid input (wrong type), return an error."""
-        self.assertIsInstance(
-            self.lj_service.create_learning_journey(True, 1), TypeError)
+        self.assertRaises(
+            TypeError, self.lj_service.create_learning_journey, True, 1)
 
     def test_create_lj_name_already_in_use(self):
-        """Using an already existing name, return an error."""
-        self.lj_service.create_learning_journey("Wheel in the Sky", 1)
-        self.assertIsInstance(self.lj_service.create_learning_journey(
-            "Wheel in the Sky", 1), AlreadyInUse)
+        self.lj_service.create_learning_journey("LJ", 1)
+        self.assertRaises(
+            AlreadyInUse, self.lj_service.create_learning_journey, "LJ", 1)
 
     def test_get_ljs_returns_them(self):
-        """When a Learning Journey is known to be added,
-        make sure it is returned."""
         self.lj_service.create_learning_journey("Unit testing 101")
         self.assertIsNotNone(self.lj_service.get_learning_journeys())

@@ -1,4 +1,4 @@
-from database_connection import get_database_connection, get_test_database_connection
+from database_connection import get_database_connection
 
 
 class ObjectiveRepository:
@@ -107,17 +107,26 @@ class ObjectiveRepository:
         Returns:
             Bool: Signals if the operation was succesful.
         """
-        if self.get_one(obj_id):
-            cursor = self._connection.cursor()
-            sql = """INSERT OR REPLACE INTO Evaluations
-                     (obj_id, progress, challenge)
-                     VALUES (?, ?, ?)"""
-            cursor.execute(sql, (obj_id, progress, challenge))
-            self._connection.commit()
 
-            return True
-        return False
+        if not self._validate_evaluation(obj_id, progress, challenge):
+            return False
+
+        cursor = self._connection.cursor()
+        sql = """INSERT OR REPLACE INTO Evaluations
+                    (obj_id, progress, challenge)
+                    VALUES (?, ?, ?)"""
+        cursor.execute(sql, (obj_id, progress, challenge))
+        self._connection.commit()
+        return True
+
+    def _validate_evaluation(self, obj_id, progress, challenge):
+        if not isinstance(progress, int) or \
+                not isinstance(challenge, int) or \
+                not (0 <= progress <= 10) or \
+                not (0 <= challenge <= 10) or \
+                not self.get_one(obj_id):
+            return False
+        return True
 
 
 objective_repo = ObjectiveRepository(get_database_connection())
-test_objective_repo = ObjectiveRepository(get_test_database_connection())

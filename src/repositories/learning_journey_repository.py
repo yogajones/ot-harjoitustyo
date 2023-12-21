@@ -1,5 +1,5 @@
 from entities.learningjourney import LearningJourney
-from database_connection import get_database_connection, get_test_database_connection
+from database_connection import get_database_connection
 
 
 class AlreadyInUse(Exception):
@@ -24,10 +24,20 @@ class LearningJourneyRepository:
 
         return result
 
-    def create(self, name, active):
-        """Appends a Learning Journey to the database and returns it."""
+    def _validate(self, name, active):
+        if not isinstance(name, str) or not isinstance(active, int):
+            raise TypeError()
         if self.get_one(name):
             raise AlreadyInUse(f"The name {name} is already in use.")
+        if len(name.strip()) == 0:
+            raise ValueError(f"Name cannot be empty.")
+        if active not in [0, 1]:
+            raise ValueError(
+                "A Learning Journey can either be active (1) or passive (0).")
+
+    def create(self, name, active=1):
+        """Appends a Learning Journey to the database and returns it."""
+        self._validate(name, active)
 
         cursor = self._connection.cursor()
         sql = "INSERT INTO LearningJourneys (name, active) VALUES (?, ?)"
@@ -57,5 +67,3 @@ class LearningJourneyRepository:
 
 
 learning_journey_repo = LearningJourneyRepository(get_database_connection())
-test_learning_journey_repo = LearningJourneyRepository(
-    get_test_database_connection())
