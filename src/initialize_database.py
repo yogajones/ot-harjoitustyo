@@ -25,7 +25,7 @@ def create_tables(connection):
                    ON DELETE CASCADE);''')
     cursor.execute('''CREATE TABLE Evaluations (
                    id INTEGER PRIMARY KEY,
-                   obj_id INTEGER NOT NULL,
+                   obj_id INTEGER UNIQUE NOT NULL,
                    progress INTEGER,
                    challenge INTEGER,
                    FOREIGN KEY (obj_id) REFERENCES Objectives(id)
