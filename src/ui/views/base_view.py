@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, CENTER
 
 
 class BaseView:
@@ -7,6 +7,10 @@ class BaseView:
 
     def __init__(self, root):
         self._frame = tk.Frame(root)
+        style = ttk.Style()
+        style.theme_use('default')
+        style.configure('TSpinbox', arrowsize=20)
+
         self._title()
         self._return_button()
 

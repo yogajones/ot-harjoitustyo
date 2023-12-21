@@ -27,12 +27,27 @@ class ObjectiveRepository:
 
     def get_one(self, obj_id):
         """Returns a database row from Objectives table if a reference is found."""
-        cursor = self._connection.cursor()
-        sql = "SELECT id, name, lj_id FROM Objectives WHERE id = ?"
-        result = cursor.execute(sql, (obj_id,)).fetchone()
-        self._connection.commit()
+        try:
+            cursor = self._connection.cursor()
+            sql = '''SELECT O.id, O.name, O.lj_id, E.progress, E.challenge 
+                    FROM Objectives AS O
+                    LEFT JOIN Evaluations AS E ON O.id = E.obj_id
+                    WHERE O.id = ?'''
+            objective_data = cursor.execute(sql, (obj_id,)).fetchone()
+            self._connection.commit()
 
-        return result
+            objective_dict = {
+                'id': objective_data[0],
+                'name': objective_data[1],
+                'lj_id': objective_data[2],
+                'progress': objective_data[3] or 0,
+                'challenge': objective_data[4] or 0
+            }
+
+            return objective_dict
+
+        except:
+            return None
 
     def get_all(self, lj_id=None):
         """Returns all saved Objectives as a list of dictionaries.
@@ -90,7 +105,7 @@ class ObjectiveRepository:
             challenge (int): Degree of perceived challenge, input from user.
 
         Returns:
-            dict: Updated objective as dict.
+            Bool: Signals if the operation was succesful.
         """
         if self.get_one(obj_id):
             cursor = self._connection.cursor()
@@ -100,7 +115,8 @@ class ObjectiveRepository:
             cursor.execute(sql, (obj_id, progress, challenge))
             self._connection.commit()
 
-            return  # objective as dict
+            return True
+        return False
 
 
 objective_repo = ObjectiveRepository(get_database_connection())

@@ -47,9 +47,14 @@ class ObjectiveService:
             challenge (int): Degree of perceived challenge, input from user.
 
         Returns:
-            dict: Updated objective as dict.
+            Bool: Signals if the operation was succesful.
         """
         return self._objective_repository.evaluate(obj_id, progress, challenge)
+
+    def get_evaluations(self, obj_id):
+        objective = self._objective_repository.get_one(obj_id)
+        return {'progress': objective['progress'],
+                'challenge': objective['challenge']}
 
 
 objective_service = ObjectiveService()
