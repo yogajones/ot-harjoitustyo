@@ -72,21 +72,12 @@ class TestObjectiveRepository(unittest.TestCase):
         self.assertTrue(self.objective_repo.evaluate(
             objective["obj_id"], 5, 5))
 
-    # def test_evaluate_operation_fails_with_invalid_input(self):
-    #    objective = self.objective_repo.create(
-    #        self.test_objective_name, self.test_lj_1.id)
-    #    self.assertFalse(self.objective_repo.evaluate(
-    #        objective["obj_id"], 20, 5))
-    #    self.assertFalse(self.objective_repo.evaluate(
-    #        objective["obj_id"], 5, "string"))
-    #    self.assertFalse(self.objective_repo.evaluate(
-    #        999, 5, 5))
-
-    def evaluate(self, obj_id, progress, challenge):
-        if self.get_one(obj_id):
-            cursor = self._connection.cursor()
-            cursor.execute(sql, (obj_id, progress, challenge))
-            self._connection.commit()
-
-            return True
-        return False
+    def test_evaluate_operation_fails_with_invalid_input(self):
+        objective = self.objective_repo.create(
+            self.test_objective_name, self.test_lj_1.id)
+        self.assertFalse(self.objective_repo.evaluate(
+            objective["obj_id"], 20, 5))
+        self.assertFalse(self.objective_repo.evaluate(
+            objective["obj_id"], 5, "string"))
+        self.assertFalse(self.objective_repo.evaluate(
+            999, 5, 5))
