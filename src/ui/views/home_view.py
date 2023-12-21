@@ -1,5 +1,4 @@
-import tkinter as tk
-from tkinter import ttk
+from tkinter import messagebox
 from services.learning_journey_service import learning_journey_service
 from .base_view import BaseView
 
@@ -31,8 +30,15 @@ class HomeView(BaseView):
 
     def _handle_add_new_journey(self):
         journey_name = self._new_journey_entry.get()
-        if journey_name:
-            learning_journey_service.create_learning_journey(journey_name)
+        if self._input_validation_error(journey_name):
+            messagebox.showerror(title="Input validation error",
+                                 message=self._input_validation_error(journey_name))
+            self._refresh()
+        else:
+            try:
+                learning_journey_service.create_learning_journey(journey_name)
+            except Exception as e:
+                messagebox.showerror(title="Application error", message=str(e))
             self._refresh()
 
     def _refresh(self):

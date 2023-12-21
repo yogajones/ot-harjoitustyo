@@ -35,12 +35,13 @@ class BaseView:
 
             item_frame.pack(fill='x')
 
-    def _form_one_entry(self, label_text, btn_text, handler, pre_filled_value=""):
+    def _form_one_entry(self, label_text, btn_text, handler, pre_filled_value=None):
         label = ttk.Label(self._frame, text=label_text)
         label.pack()
 
         entry = ttk.Entry(self._frame)
-        entry.insert(0, pre_filled_value)
+        if pre_filled_value:
+            entry.insert(0, pre_filled_value)
         entry.pack()
 
         button = ttk.Button(
@@ -48,6 +49,12 @@ class BaseView:
         button.pack()
 
         return entry
+
+    def _input_validation_error(self, input=""):
+        if len(input.strip()) == 0:
+            return "The field cannot be empty. Please try again."
+        if len(input.strip()) > 10:
+            return "The maximum number of characters for this field is 50."
 
     def pack(self):
         self._frame.pack()

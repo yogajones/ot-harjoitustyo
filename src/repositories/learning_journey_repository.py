@@ -14,31 +14,28 @@ class LearningJourneyRepository:
         to be used in database operations."""
         self._connection = connection
 
-    def get_one(self, learning_journey):
+    def get_one(self, lj_name):
         """Returns a database row from LearningJourneys table
         if a reference is found."""
         cursor = self._connection.cursor()
         sql = "SELECT id, name, active FROM LearningJourneys WHERE name = ?"
-        result = cursor.execute(sql, (learning_journey.name,)).fetchone()
+        result = cursor.execute(sql, (lj_name,)).fetchone()
         self._connection.commit()
 
         return result
 
-    def create(self, learning_journey: LearningJourney):
+    def create(self, name, active):
         """Appends a Learning Journey to the database and returns it."""
-
-        if not isinstance(learning_journey, LearningJourney):
-            return TypeError()
-        if self.get_one(learning_journey):
-            return AlreadyInUse()
+        if self.get_one(name):
+            raise AlreadyInUse(f"The name {name} is already in use.")
 
         cursor = self._connection.cursor()
         sql = "INSERT INTO LearningJourneys (name, active) VALUES (?, ?)"
-        cursor.execute(sql, (learning_journey.name, learning_journey.active))
-        learning_journey.id = cursor.lastrowid
+        cursor.execute(sql, (name, active))
+        lj_id = cursor.lastrowid
         self._connection.commit()
 
-        return learning_journey
+        return LearningJourney(name, active, lj_id)
 
     def get_all(self):
         """Returns all saved Learning Journeys, parsed to a list of dictionaries."""
