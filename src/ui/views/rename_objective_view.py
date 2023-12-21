@@ -16,7 +16,8 @@ class RenameObjectiveView(BaseView):
     def _rename_form(self):
         self._new_name_entry = self._form_one_entry(f"Rename {self._current_name}",
                                                     "Save",
-                                                    self._handle_rename_objective)
+                                                    self._handle_rename_objective,
+                                                    self._current_name)
 
     def _handle_rename_objective(self):
         new_name = self._new_name_entry.get()

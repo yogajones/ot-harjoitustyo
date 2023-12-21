@@ -35,11 +35,12 @@ class BaseView:
 
             item_frame.pack(fill='x')
 
-    def _form_one_entry(self, label_text, btn_text, handler):
+    def _form_one_entry(self, label_text, btn_text, handler, pre_filled_value=""):
         label = ttk.Label(self._frame, text=label_text)
         label.pack()
 
         entry = ttk.Entry(self._frame)
+        entry.insert(0, pre_filled_value)
         entry.pack()
 
         button = ttk.Button(
