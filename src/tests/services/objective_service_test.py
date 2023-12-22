@@ -30,19 +30,19 @@ class TestObjectiveService(unittest.TestCase):
         self.assertIsInstance(objective, dict)
 
     def test_create_objective_empty_name(self):
-        self.assertIsInstance(
-            self.objective_service.create_objective("", self.test_journey), ValueError)
-        self.assertIsInstance(self.objective_service.create_objective(
-            "Fifty characters is the upper limit for Objective name",
-            self.test_journey), ValueError)
+        self.assertRaises(
+            ValueError, self.objective_service.create_objective, "", self.test_journey)
+        self.assertRaises(ValueError, self.objective_service.create_objective,
+                          "Fifty characters is the upper limit for Objective name",
+                          self.test_journey)
 
     def test_create_objective_type_conflict(self):
-        self.assertIsInstance(
-            self.objective_service.create_objective(
-                True, self.test_journey), TypeError)
-        self.assertIsInstance(
-            self.objective_service.create_objective(
-                Objective("Valid"), "Not valid"), TypeError)
+        self.assertRaises(TypeError,
+                          self.objective_service.create_objective,
+                          True, self.test_journey)
+        self.assertRaises(TypeError,
+                          self.objective_service.create_objective,
+                          "Valid", "Not valid")
 
     def test_get_objectives_returns_them(self):
         self.assertIsNotNone(self.objective_service.get_objectives())
