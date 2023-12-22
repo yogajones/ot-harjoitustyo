@@ -37,7 +37,7 @@ class LearningJourneyRepository:
         if self.get_one(name):
             raise AlreadyInUse(f"The name {name} is already in use.")
         if len(name.strip()) == 0:
-            raise ValueError(f"Name cannot be empty.")
+            raise ValueError("Name cannot be empty.")
         if active not in [0, 1]:
             raise ValueError(
                 "A Learning Journey can be either active (1) or passive (0).")

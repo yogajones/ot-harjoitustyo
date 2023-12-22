@@ -15,7 +15,7 @@ class ObjectiveRepository:
                 not isinstance(obj_id, int):
             raise TypeError()
         if len(name.strip()) == 0:
-            raise ValueError(f"Name cannot be empty.")
+            raise ValueError("Name cannot be empty.")
 
     def _validate_evaluate(self, obj_id, progress, challenge):
         if not isinstance(progress, int) or \
@@ -56,7 +56,7 @@ class ObjectiveRepository:
         """
         try:
             cursor = self._connection.cursor()
-            sql = '''SELECT O.id, O.name, O.lj_id, E.progress, E.challenge 
+            sql = '''SELECT O.id, O.name, O.lj_id, E.progress, E.challenge
                     FROM Objectives AS O
                     LEFT JOIN Evaluations AS E ON O.id = E.obj_id
                     WHERE O.id = ?'''

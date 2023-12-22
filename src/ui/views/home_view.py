@@ -6,9 +6,6 @@ from .base_view import BaseView
 class HomeView(BaseView):
     """Allows the user to add a new Learning Journey and redirects them to manage existing ones."""
 
-    # BUG: When the user adds a certain number of journeys, they overflow out of sight.
-    #      A scrollbar or other solution is needed.
-
     def __init__(self, root, show_manage_view, show_home_view, update_selected_journey):
         super().__init__(root)
         self._show_manage_view = show_manage_view

@@ -12,15 +12,15 @@ test_connection = sqlite3.connect(os.path.join(
 test_connection.row_factory = sqlite3.Row
 
 
-def enable_foreign_keys(connection):
+def enable_foreign_keys(connect):
     """Enables the use of the 'ON DELETE CASCADE' in the schema.
 
     Args:
         connection (Connection): database connection
     """
-    cursor = connection.cursor()
+    cursor = connect.cursor()
     cursor.execute("PRAGMA foreign_keys = ON;")
-    connection.commit()
+    connect.commit()
 
 
 def get_database_connection():
@@ -29,7 +29,7 @@ def get_database_connection():
     Returns:
         Connection: connection to production database
     """
-    enable_foreign_keys(connection=connection)
+    enable_foreign_keys(connect=connection)
     return connection
 
 
@@ -39,5 +39,5 @@ def get_test_database_connection():
     Returns:
         Connection: connection to test database
     """
-    enable_foreign_keys(connection=test_connection)
+    enable_foreign_keys(connect=test_connection)
     return test_connection
