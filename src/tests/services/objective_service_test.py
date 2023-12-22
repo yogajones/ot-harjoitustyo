@@ -58,10 +58,9 @@ class TestObjectiveService(unittest.TestCase):
         self.assertTrue(self.objective_service.rename_objective(
             self.ob1["obj_id"], "New name"))
 
-    def test_rename_objective_returns_fails_with_empty_new_name(self):
-
-        self.assertFalse(self.objective_service.rename_objective(
-            self.ob1["obj_id"], ""))
+    def test_rename_objective_fails_with_empty_new_name(self):
+        self.assertRaises(
+            ValueError, self.objective_service.rename_objective, self.ob1["obj_id"], "")
 
     def test_evaluate_objective_returns_true_with_valid_input(self):
         self.assertTrue(

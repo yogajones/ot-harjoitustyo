@@ -53,7 +53,7 @@ class BaseView:
     def _input_validation_error(self, input=""):
         if len(input.strip()) == 0:
             return "The field cannot be empty. Please try again."
-        if len(input.strip()) > 10:
+        if len(input.strip()) > 50:
             return "The maximum number of characters for this field is 50."
 
     def pack(self):

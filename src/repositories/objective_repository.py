@@ -5,18 +5,31 @@ class ObjectiveRepository:
     """In charge of reading and writing Objectives to/from the database.
     Deals with Objectives and Evaluations tables."""
 
-    # REFACTOR: privatize methods
-
     def __init__(self, connection):
         """Establishes a repository for Objective objects
         to be used in database operations."""
         self._connection = connection
 
+    def _validate_create_and_rename(self, name, lj_id=-1, obj_id=-1):
+        if not isinstance(name, str) or \
+                not isinstance(lj_id, int) or \
+                not isinstance(obj_id, int):
+            raise TypeError()
+        if len(name.strip()) == 0:
+            raise ValueError(f"Name cannot be empty.")
+
+    def _validate_evaluate(self, obj_id, progress, challenge):
+        if not isinstance(progress, int) or \
+                not isinstance(challenge, int) or \
+                not (0 <= progress <= 10) or \
+                not (0 <= challenge <= 10) or \
+                not self.get_one(obj_id):
+            return False
+        return True
+
     def create(self, name: str, lj_id):
         """Appends an objective to the database and returns it as a dictionary."""
-
-        if not isinstance(name, str):
-            return TypeError()
+        self._validate_create_and_rename(name=name, lj_id=lj_id)
 
         cursor = self._connection.cursor()
         sql = "INSERT INTO Objectives (name, lj_id) VALUES (?, ?)"
@@ -88,6 +101,8 @@ class ObjectiveRepository:
             obj_id (int): Objective's unique ID, originating from the database.
             new_name (str): Name to update, input from user.
         """
+        self._validate_create_and_rename(obj_id=obj_id, name=new_name)
+
         if self.get_one(obj_id) and new_name:
             cursor = self._connection.cursor()
             cursor.execute(
@@ -108,7 +123,7 @@ class ObjectiveRepository:
             Bool: Signals if the operation was succesful.
         """
 
-        if not self._validate_evaluation(obj_id, progress, challenge):
+        if not self._validate_evaluate(obj_id, progress, challenge):
             return False
 
         cursor = self._connection.cursor()
@@ -117,15 +132,6 @@ class ObjectiveRepository:
                     VALUES (?, ?, ?)"""
         cursor.execute(sql, (obj_id, progress, challenge))
         self._connection.commit()
-        return True
-
-    def _validate_evaluation(self, obj_id, progress, challenge):
-        if not isinstance(progress, int) or \
-                not isinstance(challenge, int) or \
-                not (0 <= progress <= 10) or \
-                not (0 <= challenge <= 10) or \
-                not self.get_one(obj_id):
-            return False
         return True
 
 

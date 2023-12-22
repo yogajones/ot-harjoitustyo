@@ -1,5 +1,4 @@
-import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, messagebox
 from services.objective_service import objective_service
 from .base_view import BaseView
 
@@ -38,10 +37,17 @@ class ManageView(BaseView):
                                                          self._handle_add_new_objective)
 
     def _handle_add_new_objective(self):
-        objective_name = self._new_objective_entry.get()
-        if objective_name:
-            objective_service.create_objective(
-                objective_name, self._selected_journey['id'])
+        objective_name = self._new_objective_entry.get().strip()
+        if self._input_validation_error(objective_name):
+            messagebox.showerror(title="Input validation error",
+                                 message=self._input_validation_error(objective_name))
+            self._refresh()
+        else:
+            try:
+                objective_service.create_objective(
+                    objective_name, self._selected_journey['id'])
+            except Exception as e:
+                messagebox.showerror(title="Application error", message=str(e))
             self._refresh()
 
     def _title(self):

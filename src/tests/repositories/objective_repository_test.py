@@ -29,8 +29,8 @@ class TestObjectiveRepository(unittest.TestCase):
         self.assertEqual("OB", objective["name"])
 
     def test_create_type_conflict(self):
-        self.assertRaises(TypeError, self.objective_repo.create(
-            True, self.test_lj_1.id))
+        self.assertRaises(TypeError, self.objective_repo.create,
+                          True, self.test_lj_1.id)
 
     def test_returns_all_objectives(self):
         self.objective_repo.create("Ob 1.1", 1)

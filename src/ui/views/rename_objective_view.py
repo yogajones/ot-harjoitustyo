@@ -1,4 +1,4 @@
-from tkinter import ttk
+from tkinter import ttk, messagebox
 from services.objective_service import objective_service
 from .base_view import BaseView
 
@@ -20,9 +20,16 @@ class RenameObjectiveView(BaseView):
                                                     self._current_name)
 
     def _handle_rename_objective(self):
-        new_name = self._new_name_entry.get()
-        if new_name:
-            objective_service.rename_objective(self._current_id, new_name)
+        new_name = self._new_name_entry.get().strip()
+        if self._input_validation_error(new_name):
+            messagebox.showerror(title="Input validation error",
+                                 message=self._input_validation_error(new_name))
+            self._show_manage_view(self._selected_journey)
+        else:
+            try:
+                objective_service.rename_objective(self._current_id, new_name)
+            except Exception as e:
+                messagebox.showerror(title="Application error", message=str(e))
             self._show_manage_view(self._selected_journey)
 
     def _return_button(self):
