@@ -1,7 +1,13 @@
 **Sprint 5**: 12 Dec 2023 - 22 Dec 2023:
 - implemented a slice: "User can evaluate objectives"
     - this introducted the Evaluate View
+- implemented a slice: "User can archive Learning Journeys"
 - refactored UI: moved common view methods to a view template
+- finished re-formatting docstring to Google format, removed unnecessary blahblahblah from /src
+- broke, fixed and added some unit tests
+- performed final system tests manually
+- added proper validation to user input
+- started migrating the UI from 'pack' geometry manager to 'grid' manager -> deemed not in line with development goals -> aborted
 
 **Sprint 4**: 5 Dec 2023 - 12 Dec 2023:
 - implemented a slice: "User can delete objectives"

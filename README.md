@@ -4,7 +4,7 @@ This is an intermediate studies project for the Software Development Methods (5 
 
 The purpose of this offline desktop app is to help lifelong learners manage their learning objectives. Take a look at the [Software Requirements Specification](https://github.com/yogajones/ot-harjoitustyo/blob/main/docs/software_requirements_specification.md) for a detailed description of features.
 
-Latest release: [v0.3.0](https://github.com/yogajones/ot-harjoitustyo/releases/tag/v0.3.0)
+Latest release: [v1.0.0](https://github.com/yogajones/ot-harjoitustyo/releases/tag/v1.0.0)
 
 ## Documentation:
 - [User guide](https://github.com/yogajones/ot-harjoitustyo/blob/main/docs/user_guide.md)
@@ -15,7 +15,7 @@ Latest release: [v0.3.0](https://github.com/yogajones/ot-harjoitustyo/releases/t
 
 ## How to run the app as a user
 
-Pre-requisites: the app has been tested on Cubbli Linux (Ubuntu-based distro of University of Helsinki), using Python 3.10 and Git 2.34.1.
+Pre-requisites: the app has been tested on Cubbli Linux (Ubuntu-based distro of University of Helsinki), using Python 3.10.
 
 1. Clone the project repository to your computer:
 

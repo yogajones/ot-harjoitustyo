@@ -23,9 +23,26 @@ Work hours are recorded to the nearest half hour, rounding upwards.
 | 4.12.2023  | 3          | UI total renovation |
 | 5.12.2023  | 3          | UI total renovation |
 | 5.12.2023  | 1          | UML sequence diagram & docs update |
-
 | 11.12.2023 | 1,5        | feature: "User can delete objectives" |
 | 11.12.2023 | 2          | feature: "User can rename objectives" |
 | 12.12.2023 | 1,5        | docs update: architecture, user guide |
+| 15.12.2023 | 0,5        | planned tasks |
+| 16.12.2023 | 3          | refactor UI: BaseView |
+| 19.12.2023 | 3          | fix tests |
+| 19.12.2023 | 1          | testing document |
+| 19.12.2023 | 0,5        | planned tasks |
+| 20.12.2023 | 1,5        | feature: "User can evaluate Objectives" |
+| 20.12.2023 | 2          | fix tests and data integrity |
+| 20.12.2023 | 3          | aborted: study TKinter, switch to grid based layout |
+| 21.12.2023 | 1          | feature: "User can view current evaluations" |
+| 21.12.2023 | 2          | fix UI bugs |
+| 21.12.2023 | 2          | input validation for HomeView |
+| 21.12.2023 | 1          | fix tests |
+| 22.12.2023 | 1          | more unit tests for evaluating objectives |
+| 22.12.2023 | 1          | input validation for ManageView, RenameObjectiveView |
+| 22.12.2023 | 1          | docstring re-format |
+| 22.12.2023 | 1,5        | feature: "User can archive Learning Journeys" |
+| 22.12.2023 | 0,5        | manual system tests |
+| 22.12.2023 | 1          | docs update: architecture, testing document |
 
-TOTAL HOURS: 37,5
+TOTAL HOURS: 64
