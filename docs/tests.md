@@ -22,6 +22,8 @@ Figure 1 reports the latest test coverage. Database initialization is omitted.
 
 ## System tests
 
-### Installation
+System tests were performed manually on Cubbli Linux (Ubuntu-based distro of University of Helsinki). Following the Software Requirements Specification, all functionalities were tested with both valid and invalid inputs.
 
-### Functionalities
+## Installation
+
+On Cubbli Linux, the program was installed succesfully using the User Guide.
