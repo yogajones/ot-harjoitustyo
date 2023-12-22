@@ -3,11 +3,10 @@ from database_connection import get_database_connection
 
 class ObjectiveRepository:
     """In charge of reading and writing Objectives to/from the database.
-    Deals with Objectives and Evaluations tables."""
+    Deals with Objectives and Evaluations tables.
+    """
 
     def __init__(self, connection):
-        """Establishes a repository for Objective objects
-        to be used in database operations."""
         self._connection = connection
 
     def _validate_create_and_rename(self, name, lj_id=-1, obj_id=-1):
@@ -27,8 +26,16 @@ class ObjectiveRepository:
             return False
         return True
 
-    def create(self, name: str, lj_id):
-        """Appends an objective to the database and returns it as a dictionary."""
+    def create(self, name, lj_id):
+        """Appends an objective to the database and returns it as a dictionary.
+
+        Args:
+            name (str): Name of the new objective.
+            lj_id (int): Unique ID of the Learning Journey to append the objective to.
+
+        Returns:
+            dict: A dictionary containing the newly created objective.
+        """
         self._validate_create_and_rename(name=name, lj_id=lj_id)
 
         cursor = self._connection.cursor()
@@ -39,7 +46,14 @@ class ObjectiveRepository:
         return {"obj_id": cursor.lastrowid, "name": name, "lj_id": lj_id}
 
     def get_one(self, obj_id):
-        """Returns a database row from Objectives table if a reference is found."""
+        """Returns an objective as dictionary if a reference is found.
+
+        Args:
+            obj_id (int): Unique ID of the objective, originates from the database.
+
+        Returns:
+            dict: A dictionary containing the fetched objective.
+        """
         try:
             cursor = self._connection.cursor()
             sql = '''SELECT O.id, O.name, O.lj_id, E.progress, E.challenge 
@@ -64,7 +78,14 @@ class ObjectiveRepository:
 
     def get_all(self, lj_id=None):
         """Returns all saved Objectives as a list of dictionaries.
-        Optional filter by Learning Journey."""
+        Optional filter by Learning Journey.
+
+        Args:
+            lj_id (int, optional): Unique ID of a Learning Journey filter. Defaults to None.
+
+        Returns:
+            list: List of dictionaries containing all (filtered) objectives.
+        """
         cursor = self._connection.cursor()
         if lj_id:
             objectives_data = cursor.execute(
@@ -86,7 +107,14 @@ class ObjectiveRepository:
         return objectives
 
     def delete_one(self, obj_id):
-        """Deletes the given Objective."""
+        """Deletes the given Objective.
+
+        Args:
+            obj_id (int): Unique ID of the objective, originates from the database.
+
+        Returns:
+            bool: Signal whether the operation was succesful.
+        """
         if self.get_one(obj_id):
             cursor = self._connection.cursor()
             cursor.execute("DELETE FROM Objectives where id = ?", (obj_id,))
