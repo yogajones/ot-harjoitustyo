@@ -21,9 +21,22 @@ class HomeView(BaseView):
                                                        self._handle_add_new_journey)
 
     def _list_journeys(self):
-        journeys = learning_journey_service.get_learning_journeys()
-        buttons = {"Manage Objectives": self._show_manage_view}
+        journeys = learning_journey_service.get_learning_journeys(
+            only_active=True)
+        buttons = {
+            "Manage Objectives": self._show_manage_view,
+            "Archive": lambda journey: self._handle_archive_journey(journey["id"])}
         self._list_items(journeys, buttons)
+
+    def _handle_archive_journey(self, lj_id):
+        try:
+            learning_journey_service.archive(lj_id)
+            messagebox.showinfo(title="Success",
+                                message="Learning Journey succesfully archived!")
+            self._refresh()
+        except Exception as e:
+            messagebox.showinfo(title="Application error", message=str(e))
+            self._refresh()
 
     def _handle_add_new_journey(self):
         journey_name = self._new_journey_entry.get().strip()

@@ -49,3 +49,11 @@ class TestLearningJourneyRepository(unittest.TestCase):
 
         result = self.learning_journey_repo.get_all()
         self.assertEqual(len(result), 3)
+
+    def test_get_all_active_returns_only_active(self):
+        self.learning_journey_repo.create("First", 1)
+        self.learning_journey_repo.create("Second", 1)
+        self.learning_journey_repo.create("Third", 0)
+
+        result = self.learning_journey_repo.get_all(only_active_journeys=True)
+        self.assertEqual(len(result), 2)

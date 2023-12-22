@@ -39,3 +39,10 @@ class TestLearningJourneyService(unittest.TestCase):
     def test_get_ljs_returns_them(self):
         self.lj_service.create_learning_journey("Unit testing 101")
         self.assertIsNotNone(self.lj_service.get_learning_journeys())
+
+    def test_archive_returns_true_with_existing_journey(self):
+        test_lj = self.lj_service.create_learning_journey("LJ", 1)
+        self.assertTrue(self.lj_service.archive(test_lj.id))
+
+    def test_archive_raises_error_with_nonexisting_journey(self):
+        self.assertRaises(ValueError, self.lj_service.archive, 999)

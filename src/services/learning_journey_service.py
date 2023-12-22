@@ -6,7 +6,6 @@ class LearningJourneyService:
     """
 
     def __init__(self, learning_journey_repository=learning_journey_repo):
-
         self._learning_journey_repository = learning_journey_repository
 
     def create_learning_journey(self, name, active=1):
@@ -21,14 +20,17 @@ class LearningJourneyService:
         """
         return self._learning_journey_repository.create(name, active)
 
-    def get_learning_journeys(self):
+    def get_learning_journeys(self, only_active=False):
         """Calls the repository to query and return all saved Learning Journeys.
 
         Returns:
             list: List of dictionaries containing existing Learning Journeys.
         """
-        journeys = self._learning_journey_repository.get_all()
+        journeys = self._learning_journey_repository.get_all(only_active)
         return journeys
+
+    def archive(self, lj_id):
+        return self._learning_journey_repository.archive(lj_id)
 
 
 learning_journey_service = LearningJourneyService()

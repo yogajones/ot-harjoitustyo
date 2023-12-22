@@ -14,19 +14,26 @@ class LearningJourneyRepository:
     def __init__(self, connection):
         self._connection = connection
 
-    def get_one(self, lj_name):
+    def get_one(self, lj_name=None, lj_id=None):
         """Returns a database row from LearningJourneys table
         if a reference is found.
 
         Args:
-            lj_name (str): The name of the Learning Journey to fetch.
+            lj_name (str, optional): The name of the Learning Journey to fetch.
+            lj_id (str, optional): The unique ID of the Learning Journey to fetch.
 
         Returns:
             sqlite3.Row: Database row from LearningJourneys table.
         """
         cursor = self._connection.cursor()
-        sql = "SELECT id, name, active FROM LearningJourneys WHERE name = ?"
-        result = cursor.execute(sql, (lj_name,)).fetchone()
+        if lj_id:
+            sql = "SELECT id, name, active FROM LearningJourneys WHERE id = ?"
+            result = cursor.execute(sql, (lj_id,)).fetchone()
+        elif lj_name:
+            sql = "SELECT id, name, active FROM LearningJourneys WHERE name = ?"
+            result = cursor.execute(sql, (lj_name,)).fetchone()
+        else:
+            raise ValueError("get_one() did not recieve any arguments!")
         self._connection.commit()
 
         return result
@@ -62,14 +69,22 @@ class LearningJourneyRepository:
 
         return LearningJourney(name, active, lj_id)
 
-    def get_all(self):
+    def get_all(self, only_active_journeys=False):
         """Returns all saved Learning Journeys, parsed to a list of dictionaries.
 
+        Args:
+            only_active_journeys (bool, optional): Return only active journeys. Defaults to True. 
+
         Returns:
-            list: List of dictionaries containing existing Learning Journeys.
+            list: List of dictionaries containing fetched Learning Journeys.
         """
         cursor = self._connection.cursor()
-        cursor.execute("SELECT id, name, active FROM LearningJourneys")
+        if only_active_journeys:
+            cursor.execute(
+                "SELECT id, name, active FROM LearningJourneys WHERE active = 1")
+        else:
+            cursor.execute("SELECT id, name, active FROM LearningJourneys")
+
         journeys_data = cursor.fetchall()
         self._connection.commit()
 
@@ -83,6 +98,23 @@ class LearningJourneyRepository:
             journeys.append(journey_dict)
 
         return journeys
+
+    def _validate_archive(self, lj_id):
+        if not self.get_one(lj_id=lj_id):
+            raise ValueError("Learning Journey not found.")
+
+    def archive(self, lj_id):
+        """Changes the state of the Learning Journey to passive.
+
+        Args:
+            lj_id (int): Unique ID of the Learning Journey, originating from database.
+        """
+        self._validate_archive(lj_id)
+
+        cursor = self._connection.cursor()
+        sql = "UPDATE LearningJourneys SET active = 0 WHERE id = ?"
+        cursor.execute(sql, (lj_id,))
+        return True
 
 
 learning_journey_repo = LearningJourneyRepository(get_database_connection())
