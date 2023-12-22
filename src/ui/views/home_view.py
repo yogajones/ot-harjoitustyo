@@ -29,7 +29,7 @@ class HomeView(BaseView):
         self._list_items(journeys, buttons)
 
     def _handle_add_new_journey(self):
-        journey_name = self._new_journey_entry.get()
+        journey_name = self._new_journey_entry.get().strip()
         if self._input_validation_error(journey_name):
             messagebox.showerror(title="Input validation error",
                                  message=self._input_validation_error(journey_name))
