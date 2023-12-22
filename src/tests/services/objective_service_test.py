@@ -21,10 +21,12 @@ class TestObjectiveService(unittest.TestCase):
 
         self.test_journey = self.learning_journey_repo.create("LJ")
         self.objective_service = ObjectiveService(self.objective_repo)
+        self.ob1 = self.objective_service.create_objective(
+            "Ob1", self.test_journey.id)
 
     def test_create_objective_valid_input(self):
         objective = self.objective_service.create_objective(
-            "OB", self.test_journey.id)
+            "Ob2", self.test_journey.id)
         self.assertIsInstance(objective, dict)
 
     def test_create_objective_empty_name(self):
@@ -43,26 +45,44 @@ class TestObjectiveService(unittest.TestCase):
                 Objective("Valid"), "Not valid"), TypeError)
 
     def test_get_objectives_returns_them(self):
-        self.objective_service.create_objective(
-            "Gain experience with Unittest", self.test_journey.id)
         self.assertIsNotNone(self.objective_service.get_objectives())
 
     def test_delete_objective_returns_true(self):
-        ob1 = self.objective_service.create_objective(
-            "Ob1", self.test_journey.id)
-        self.assertTrue(self.objective_service.delete_objective(ob1["obj_id"]))
+        self.assertTrue(
+            self.objective_service.delete_objective(self.ob1["obj_id"]))
 
     def test_delete_objective_with_invalid_id_returns_false(self):
         self.assertFalse(self.objective_service.delete_objective(999))
 
     def test_rename_objective_returns_true(self):
-        ob1 = self.objective_service.create_objective(
-            "Ob1", self.test_journey.id)
         self.assertTrue(self.objective_service.rename_objective(
-            ob1["obj_id"], "New name"))
+            self.ob1["obj_id"], "New name"))
 
     def test_rename_objective_returns_fails_with_empty_new_name(self):
-        ob1 = self.objective_service.create_objective(
-            "Ob1", self.test_journey.id)
+
         self.assertFalse(self.objective_service.rename_objective(
-            ob1["obj_id"], ""))
+            self.ob1["obj_id"], ""))
+
+    def test_evaluate_objective_returns_true_with_valid_input(self):
+        self.assertTrue(
+            self.objective_service.evaluate_objective(self.ob1["obj_id"], 5, 5))
+
+    def test_evaluate_objective_returns_false_with_invalid_input(self):
+        self.assertFalse(
+            self.objective_service.evaluate_objective(self.ob1["obj_id"], 20, 5))
+        self.assertFalse(
+            self.objective_service.evaluate_objective(999, 5, 5))
+        self.assertFalse(
+            self.objective_service.evaluate_objective(True, 20, 5))
+        self.assertFalse(
+            self.objective_service.evaluate_objective(self.ob1["obj_id"], "string", 5))
+
+    def test_get_evaluations_returns_them(self):
+        self.objective_service.evaluate_objective(self.ob1["obj_id"], 20, 5)
+        self.assertIsNotNone(
+            self.objective_service.get_evaluations(self.ob1["obj_id"]))
+
+    def test_get_evaluations_returns_default_0_if_no_evaluations(self):
+        evs = self.objective_service.get_evaluations(self.ob1["obj_id"])
+        self.assertEqual(evs["progress"], 0)
+        self.assertEqual(evs["challenge"], 0)
