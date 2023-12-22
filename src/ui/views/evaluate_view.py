@@ -12,9 +12,9 @@ class EvaluateView(BaseView):
         self._selected_journey = selected_journey
 
         self._current_progress = StringVar(value=str(objective_service.get_evaluations(self._objective_id)[
-            'progress']))
+            "progress"]))
         self._current_challenge = StringVar(value=str(objective_service.get_evaluations(self._objective_id)[
-            'challenge']))
+            "challenge"]))
         super().__init__(root)
 
         self._evaluate_objective_form()
@@ -31,19 +31,19 @@ class EvaluateView(BaseView):
 
         save_button = ttk.Button(
             self._frame, text="Save", command=self._handle_evaluate)
-        save_button.pack(side='left', pady=25, padx=10)
+        save_button.pack(side="left", pady=25, padx=10)
 
         return_button = ttk.Button(
             self._frame, text="Back", command=lambda: self._show_manage_view(self._selected_journey))
-        return_button.pack(side='right', pady=25, padx=10)
+        return_button.pack(side="right", pady=25, padx=10)
 
     def _spinbox_frame(self, label_text, current_value):
         frame = ttk.Frame(self._frame)
         label = ttk.Label(frame, text=label_text, font=("Arial", 12), width=11)
-        label.pack(side='left', pady=15)
+        label.pack(side="left", pady=15)
         entry_field = self._spinbox(frame, current_value)
-        entry_field.pack(side='right')
-        frame.pack(fill='x')
+        entry_field.pack(side="right")
+        frame.pack(fill="x")
         return entry_field
 
     def _spinbox(self, frame, current_value):

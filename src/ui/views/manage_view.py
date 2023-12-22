@@ -19,7 +19,7 @@ class ManageView(BaseView):
 
     def _list_objectives(self):
         objectives = objective_service.get_objectives(
-            self._selected_journey['id'])
+            self._selected_journey["id"])
         buttons = {
             "Delete": lambda objective: self._handle_delete_objective(objective["id"]),
             "Rename": lambda objective: self._show_rename_view(objective["id"], objective["name"]),
@@ -45,7 +45,7 @@ class ManageView(BaseView):
         else:
             try:
                 objective_service.create_objective(
-                    objective_name, self._selected_journey['id'])
+                    objective_name, self._selected_journey["id"])
             except Exception as e:
                 messagebox.showerror(title="Application error", message=str(e))
             self._refresh()

@@ -9,7 +9,6 @@ test_learning_journey_repo = LearningJourneyRepository(
 
 class TestLearningJourneyRepository(unittest.TestCase):
     def setUp(self):
-        """Empty the repo and create a mock Learning Journey for later use."""
         initialize_test_database()
         self.learning_journey_repo = test_learning_journey_repo
         self.test_lj_name = "LJ"

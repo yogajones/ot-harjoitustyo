@@ -13,8 +13,6 @@ test_learning_journey_repo = LearningJourneyRepository(
 
 class TestObjectiveService(unittest.TestCase):
     def setUp(self):
-        """Create an Objective Service instance
-        that uses an emptied mock repository."""
         initialize_test_database()
         self.learning_journey_repo = test_learning_journey_repo
         self.objective_repo = test_objective_repo

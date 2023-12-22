@@ -25,15 +25,15 @@ class BaseView:
             item_frame = tk.Frame(self._frame)
 
             label = ttk.Label(item_frame,
-                              text=item['name'], font=("Arial", 12))
-            label.pack(side='left', padx=20, pady=10)
+                              text=item["name"], font=("Arial", 12))
+            label.pack(side="left", padx=20, pady=10)
 
             for text, command in buttons.items():
                 button = ttk.Button(item_frame, text=text,
                                     command=lambda item=item, cmd=command: cmd(item))
-                button.pack(side='right')
+                button.pack(side="right")
 
-            item_frame.pack(fill='x')
+            item_frame.pack(fill="x")
 
     def _form_one_entry(self, label_text, btn_text, handler, pre_filled_value=None):
         label = ttk.Label(self._frame, text=label_text)

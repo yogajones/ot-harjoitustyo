@@ -64,11 +64,11 @@ class ObjectiveRepository:
             self._connection.commit()
 
             objective_dict = {
-                'id': objective_data[0],
-                'name': objective_data[1],
-                'lj_id': objective_data[2],
-                'progress': objective_data[3] or 0,
-                'challenge': objective_data[4] or 0
+                "id": objective_data[0],
+                "name": objective_data[1],
+                "lj_id": objective_data[2],
+                "progress": objective_data[3] or 0,
+                "challenge": objective_data[4] or 0
             }
 
             return objective_dict
@@ -98,9 +98,9 @@ class ObjectiveRepository:
         objectives = []
         for objective_data in objectives_data:
             objective_dict = {
-                'id': objective_data[0],
-                'name': objective_data[1],
-                'lj_id': objective_data[2]
+                "id": objective_data[0],
+                "name": objective_data[1],
+                "lj_id": objective_data[2]
             }
             objectives.append(objective_dict)
 
@@ -155,9 +155,9 @@ class ObjectiveRepository:
             return False
 
         cursor = self._connection.cursor()
-        sql = """INSERT OR REPLACE INTO Evaluations
+        sql = '''INSERT OR REPLACE INTO Evaluations
                     (obj_id, progress, challenge)
-                    VALUES (?, ?, ?)"""
+                    VALUES (?, ?, ?)'''
         cursor.execute(sql, (obj_id, progress, challenge))
         self._connection.commit()
         return True

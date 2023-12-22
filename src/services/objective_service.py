@@ -72,8 +72,8 @@ class ObjectiveService:
             dict: Dictionary containing the current progress and challenge values.
         """
         objective = self._objective_repository.get_one(obj_id)
-        return {'progress': objective['progress'],
-                'challenge': objective['challenge']}
+        return {"progress": objective["progress"],
+                "challenge": objective["challenge"]}
 
 
 objective_service = ObjectiveService()

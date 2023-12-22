@@ -76,9 +76,9 @@ class LearningJourneyRepository:
         journeys = []
         for journey_data in journeys_data:
             journey_dict = {
-                'id': journey_data[0],
-                'name': journey_data[1],
-                'active': journey_data[2]
+                "id": journey_data[0],
+                "name": journey_data[1],
+                "active": journey_data[2]
             }
             journeys.append(journey_dict)
 
