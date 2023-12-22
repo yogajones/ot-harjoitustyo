@@ -131,13 +131,13 @@ class ObjectiveRepository:
         """
         self._validate_create_and_rename(obj_id=obj_id, name=new_name)
 
-        if self.get_one(obj_id) and new_name:
-            cursor = self._connection.cursor()
-            cursor.execute(
-                "UPDATE Objectives SET name = ? WHERE id = ?", (new_name, obj_id))
-            self._connection.commit()
-            return True
-        return False
+        if not self.get_one(obj_id):
+            return False
+        cursor = self._connection.cursor()
+        cursor.execute(
+            "UPDATE Objectives SET name = ? WHERE id = ?", (new_name, obj_id))
+        self._connection.commit()
+        return True
 
     def evaluate(self, obj_id, progress, challenge):
         """Updates an Objective's evaluations.

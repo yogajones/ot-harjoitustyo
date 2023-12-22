@@ -66,6 +66,9 @@ class TestObjectiveRepository(unittest.TestCase):
         self.assertEqual("After renaming",
                          renamed_objective["name"])
 
+    def test_renaming_nonexisting_objective_return_false(self):
+        self.assertFalse(self.objective_repo.rename(999, "New name"))
+
     def test_evaluate_operation_succeeds_with_valid_input(self):
         objective = self.objective_repo.create(
             self.test_objective_name, self.test_lj_1.id)
